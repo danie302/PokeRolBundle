@@ -19,6 +19,7 @@ const statsSchema = new mongoose.Schema({
     speed: { type: Number, required: true },
 });
 
+// Define ability schema
 const abilitySchema = new mongoose.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
@@ -41,6 +42,7 @@ const pokemonSchema = new mongoose.Schema({
     evs: { type: statsSchema, required: true },
     moves: { type: [moveSchema] },
     description: { type: String },
+    isShiny: { type: Boolean, required: true }
 });
 
 export default mongoose.model<IPokemon>('Pokemon', pokemonSchema);
