@@ -1,0 +1,38 @@
+import express from 'express';
+import dotenv from 'dotenv';
+import { connectToDB } from './lib/dbConnection';
+import teamRoutes from './routes/team';
+import userRoutes from './routes/users';
+import pokemonRoutes from './routes/pokemon';
+import authRoutes from './routes/auth';
+
+// Load environment variables
+dotenv.config({
+  path: '.env'
+});
+
+// Create express app
+const app = express();
+const port = process.env.PORT || 3000;
+
+// Parse JSON bodies
+app.use(express.json());
+
+// Connect to database
+connectToDB();
+
+// Root route
+app.get('/', (req, res) => {
+  res.json({ message: 'Welcome to PokeRol API! new version 1.0' });
+});
+
+// Use routes 
+app.use('/users', userRoutes);
+app.use('/pokemon', pokemonRoutes);
+app.use('/team', teamRoutes);
+app.use('/auth', authRoutes);
+
+// Start server
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+}); 
