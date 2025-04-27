@@ -2,6 +2,7 @@
   "pokerol": "PokeRol",
   "home": "Inicio",
   "login": "Iniciar sesión",
+  "register": "Registrarse",
   "homepage": {
     "title": "Bienvenido a PokéRol",
     "description": "Tu compañero de rol Pokémon definitivo",
@@ -24,5 +25,19 @@
     "button": "Iniciar Sesión",
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "signUp": "¿Nuevo entrenador? Regístrate"
+  },
+  "registerpage": {
+    "title": "Registro de Entrenador",
+    "description": "Crea tu cuenta de entrenador Pokémon",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "username": "Nombre de usuario",
+    "email": "Correo electrónico",
+    "password": "Contraseña",
+    "confirmPassword": "Confirmar contraseña",
+    "register": "Registrarse",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta? Iniciar sesión",
+    "chooseStarter": "Elige tu Pokémon inicial",
+    "starterDescription": "Cada entrenador comienza con un Pokémon inicial único. ¡Elige sabiamente!"
   }
 }

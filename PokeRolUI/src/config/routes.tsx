@@ -1,5 +1,6 @@
 import Login from "../pages/Login/";
 import Home from "../pages/Home/";
+import Register from "../pages/Register/";
 
 export const routes = [
   {
@@ -9,5 +10,9 @@ export const routes = [
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <Register />,
   },
 ];

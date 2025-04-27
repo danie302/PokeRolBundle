@@ -1,72 +1,100 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { 
-  Box, 
-  Typography, 
-  Card, 
-  CardContent, 
-  CardMedia, 
-  Button, 
+import {
+  Box,
+  Typography,
+  Card,
+  CardContent,
+  CardMedia,
+  Button,
   Container,
   Paper
 } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Home: React.FC = () => {
   const { t } = useTranslation();
   return (
-    <Box sx={{ 
+    <Box sx={{
       minHeight: '100vh',
       background: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)',
       py: 4
     }}>
       <Container>
         {/* Hero Section */}
-        <Paper 
-          elevation={3} 
-          sx={{ 
-            p: 4, 
-            mb: 6, 
+        <Paper
+          elevation={3}
+          sx={{
+            p: 4,
+            mb: 6,
             borderRadius: 2,
             background: 'linear-gradient(to right, #CC0000, #FF0000)',
             position: 'relative',
             overflow: 'hidden'
           }}
         >
-          <Box 
-            sx={{ 
-              position: 'absolute', 
-              width: '150px', 
-              height: '150px', 
-              background: 'white', 
-              borderRadius: '50%', 
-              right: '5%', 
-              top: '50%', 
+          <Box
+            sx={{
+              position: 'absolute',
+              width: '150px',
+              height: '150px',
+              background: 'white',
+              borderRadius: '50%',
+              right: {
+                xs: '5%',
+                sm: '5%',
+                md: '5%',
+                lg: '10%'
+              },
+              top: '50%',
               transform: 'translateY(-50%)',
               border: '10px solid #222224',
+
               display: {
                 xs: 'none',
                 sm: 'block',
-                md: 'block' 
+                md: 'block'
               },
             }}
           >
-          <CardMedia
-                  component="img"
-                  image={'https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png'}
-                  alt={'Charmander'}
-                  sx={{ 
-                    objectFit: 'contain',
-                    transform: 'translatex(5%)',
-                  }}
-                />
+            <CardMedia
+              component="img"
+              image={'https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png'}
+              alt={'Charmander'}
+              sx={{
+                objectFit: 'contain',
+                transform: 'translatex(5%)',
+              }}
+            />
           </Box>
-          <Box sx={{ maxWidth: '60%' }}>
-            <Typography 
-              variant="h2" 
-              component="h1" 
-              sx={{ 
-                color: 'white', 
+          <Box sx={{
+            maxWidth: {
+              xs: '100%',
+              sm: '60%',
+              md: '60%',
+              lg: '40%'
+            },
+            paddingLeft: {
+              xs: '0',
+              sm: '0',
+              md: '0',
+              lg: '5%'
+            },
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+          }}>
+            <Typography
+              variant="h2"
+              component="h1"
+              sx={{
+                color: 'white',
                 fontWeight: 800,
+                fontSize: {
+                  xs: '2.5em',
+                  sm: '3.5em',
+                  md: '4em'
+                },
                 fontFamily: '"Pokemon Solid", sans-serif',
                 mb: 2,
                 textShadow: '3px 3px 6px rgb(5, 4, 4)'
@@ -74,9 +102,10 @@ const Home: React.FC = () => {
             >
               {t('homepage.title')}
             </Typography>
-            <Typography 
-              variant="h5" 
-              sx={{ 
+            <Typography
+              variant="h5"
+              sx={{
+                width: '100%',
                 color: 'white',
                 mb: 3,
                 textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
@@ -84,13 +113,16 @@ const Home: React.FC = () => {
             >
               {t('homepage.description')}
             </Typography>
-            <Button 
-              variant="contained" 
+            <Button
+              variant="contained"
               size="large"
-              sx={{ 
+              component={RouterLink}
+              to="/register"
+              sx={{
                 bgcolor: '#FFDE00',
                 color: '#3B4CCA',
                 fontWeight: 'bold',
+                textShadow: '1px 1px 2px rgba(0, 0, 0, 0.4)',
                 '&:hover': {
                   bgcolor: '#FFD700'
                 }
@@ -104,14 +136,14 @@ const Home: React.FC = () => {
         {/* Features Section */}
         <Typography
           variant="h2"
-          component="h2"
-          sx={{ 
+          sx={{
             textAlign: 'center',
             mb: 4,
             fontFamily: '"Pokemon Solid", sans-serif',
             fontWeight: 'bold',
             color: '#FFDE00', // Pokémon yellow
             textShadow: '3px 3px 0 #3B4CCA',
+            overflowWrap: 'break-word'
           }}
         >
           {t('homepage.features')}
@@ -136,8 +168,8 @@ const Home: React.FC = () => {
             }
           ].map((feature, index) => (
             <Box key={index} sx={{ width: { xs: '100%', md: 'calc(33.33% - 16px)' } }}>
-              <Card 
-                sx={{ 
+              <Card
+                sx={{
                   height: '100%',
                   display: 'flex',
                   flexDirection: 'column',
@@ -152,15 +184,15 @@ const Home: React.FC = () => {
                   height="200"
                   image={feature.image}
                   alt={feature.title}
-                  sx={{ 
+                  sx={{
                     objectFit: 'contain',
-                    bgcolor: '#f5f5f5' 
+                    bgcolor: '#f5f5f5'
                   }}
                 />
                 <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography 
-                    gutterBottom 
-                    variant="h5" 
+                  <Typography
+                    gutterBottom
+                    variant="h5"
                     component="h3"
                     sx={{ color: '#CC0000', fontWeight: 'bold' }}
                   >
@@ -177,7 +209,7 @@ const Home: React.FC = () => {
 
         {/* Call to Action */}
         <Paper
-          sx={{ 
+          sx={{
             textAlign: 'center',
             p: 4,
             bgcolor: '#3B4CCA',
@@ -186,7 +218,7 @@ const Home: React.FC = () => {
         >
           <Typography
             variant="h5"
-            sx={{ 
+            sx={{
               color: 'white',
               mb: 2
             }}
@@ -196,7 +228,9 @@ const Home: React.FC = () => {
           <Button
             variant="contained"
             size="large"
-            sx={{ 
+            component={RouterLink}
+            to="/register"
+            sx={{
               bgcolor: '#FFDE00',
               color: '#3B4CCA',
               fontWeight: 'bold',

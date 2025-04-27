@@ -10,6 +10,7 @@ import {
   InputAdornment,
   IconButton
 } from '@mui/material';
+import { Link as RouterLink } from 'react-router-dom';
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
@@ -245,6 +246,8 @@ const Login: React.FC = () => {
               <Button
                 variant="text"
                 size="small"
+                component={RouterLink}
+                to="/register"
                 sx={{ color: '#3B4CCA' }}
               >
                 {t('loginpage.signUp')}
