@@ -11,12 +11,14 @@ import {
   IconButton,
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { registerValidator } from '../../utils/formValidator';
+import { RegisterUserData, RegisterValidationErrors } from '../../types/forms';
 
 const Register: React.FC = () => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
+  const [validationErrors, setValidationErrors] = useState<RegisterValidationErrors>({});
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -24,6 +26,28 @@ const Register: React.FC = () => {
   const handleToggleConfirmPasswordVisibility = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+    const newUserData: RegisterUserData = {
+      firstName: formData.get('firstName') as string,
+      lastName: formData.get('lastName') as string,
+      username: formData.get('username') as string,
+      email: formData.get('email') as string,
+      password: formData.get('password') as string,
+      confirmPassword: formData.get('confirmPassword') as string
+    };
+
+    const errors = registerValidator(newUserData);
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
+    
+    // TODO: Send data to backend
+  };    
+  
 
   return (
     <Container maxWidth="md" sx={{ mt: 4, mb: 8 }}>
@@ -64,7 +88,7 @@ const Register: React.FC = () => {
             {t('registerpage.title')}
           </Typography>
           
-          <Box component="form" sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} onChange={()=>{setValidationErrors({})}} noValidate sx={{ mt: 1 }}>
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 2 }}>
               <Box sx={{ flex: 1, minWidth: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
                 <TextField
@@ -74,6 +98,8 @@ const Register: React.FC = () => {
                   label={t('registerpage.firstName')}
                   name="firstName"
                   autoComplete="given-name"
+                  error={!!validationErrors.firstName}
+                  helperText={validationErrors.firstName}
                 />
               </Box>
               <Box sx={{ flex: 1, minWidth: { xs: '100%', sm: 'calc(50% - 8px)' } }}>
@@ -84,6 +110,8 @@ const Register: React.FC = () => {
                   label={t('registerpage.lastName')}
                   name="lastName"
                   autoComplete="family-name"
+                  error={!!validationErrors.lastName}
+                  helperText={validationErrors.lastName}
                 />
               </Box>
             </Box>
@@ -96,6 +124,8 @@ const Register: React.FC = () => {
               label={t('registerpage.username')}
               name="username"
               autoComplete="username"
+              error={!!validationErrors.username}
+              helperText={validationErrors.username}
               sx={{ mb: 2 }}
             />
             
@@ -107,6 +137,8 @@ const Register: React.FC = () => {
               label={t('registerpage.email')}
               name="email"
               autoComplete="email"
+              error={!!validationErrors.email}
+              helperText={validationErrors.email}
               sx={{ mb: 2 }}
             />
             
@@ -119,6 +151,8 @@ const Register: React.FC = () => {
               type={showPassword ? 'text' : 'password'}
               id="password"
               autoComplete="new-password"
+              error={!!validationErrors.password}
+              helperText={validationErrors.password}
               sx={{ mb: 2 }}
               InputProps={{
                 endAdornment: (
@@ -144,6 +178,8 @@ const Register: React.FC = () => {
               id="confirmPassword"
               autoComplete="new-password"
               sx={{ mb: 3 }}
+              error={!!validationErrors.confirmPassword}
+              helperText={validationErrors.confirmPassword}
               InputProps={{
                 endAdornment: (
                   <InputAdornment position="end">
@@ -162,6 +198,7 @@ const Register: React.FC = () => {
               type="submit"
               fullWidth
               variant="contained"
+              disabled={Object.keys(validationErrors).length > 0}
               sx={{
                 mt: 1,
                 mb: 2,

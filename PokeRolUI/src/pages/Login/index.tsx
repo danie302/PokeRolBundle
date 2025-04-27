@@ -11,12 +11,33 @@ import {
   IconButton
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
+import { LoginUserData, LoginValidationErrors } from '../../types/forms';
+import { loginValidator } from '../../utils/formValidator';
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
+
+  const [validationErrors, setValidationErrors] = useState<LoginValidationErrors>({});
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData(event.target as HTMLFormElement);
+    const loginUserData: LoginUserData = {
+      email: formData.get('email') as string,
+      password: formData.get('password') as string
+    };
+
+    const errors = loginValidator(loginUserData);
+    if (Object.keys(errors).length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
+
+    // TODO: Send data to backend
   };
 
   return (
@@ -186,7 +207,7 @@ const Login: React.FC = () => {
             {t('loginpage.title')}
           </Typography>
           
-          <Box component="form" sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={handleSubmit} onChange={()=>{setValidationErrors({})}} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -197,6 +218,8 @@ const Login: React.FC = () => {
               autoComplete="email"
               autoFocus
               sx={{ mb: 2 }}
+              error={!!validationErrors.email}
+              helperText={validationErrors.email}
             />
             <TextField
               margin="normal"
@@ -219,6 +242,8 @@ const Login: React.FC = () => {
                   </InputAdornment>
                 )
               }}
+              error={!!validationErrors.password}
+              helperText={validationErrors.password}
             />
             <Button
               type="submit"

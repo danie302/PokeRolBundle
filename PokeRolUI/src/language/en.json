@@ -39,5 +39,16 @@
     "alreadyHaveAccount": "Already have an account? Login",
     "chooseStarter": "Choose your starter Pokémon",
     "starterDescription": "Each trainer starts with a unique starter Pokémon. Choose wisely!"
+  },
+  "errors": {
+    "firstName": "First name is required",
+    "lastName": "Last name is required",
+    "username": "Username is required",
+    "email-required": "Email is required",
+    "email-invalid": "Invalid email address",
+    "password-required": "Password is required",
+    "password-minlength": "Password must be at least 8 characters long",
+    "confirmPassword-required": "Confirm password is required",
+    "confirmPassword-match": "Passwords do not match"
   }
 }

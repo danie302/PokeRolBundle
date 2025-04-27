@@ -39,5 +39,16 @@
     "alreadyHaveAccount": "¿Ya tienes una cuenta? Iniciar sesión",
     "chooseStarter": "Elige tu Pokémon inicial",
     "starterDescription": "Cada entrenador comienza con un Pokémon inicial único. ¡Elige sabiamente!"
+  },
+  "errors": {
+    "firstName": "Nombre es requerido",
+    "lastName": "Apellido es requerido",
+    "username": "Nombre de usuario es requerido",
+    "email-required": "Correo electrónico es requerido",
+    "email-invalid": "Correo electrónico inválido",
+    "password-required": "Contraseña es requerida",
+    "password-minlength": "La contraseña debe tener al menos 8 caracteres",
+    "confirmPassword-required": "Confirmar contraseña es requerida",
+    "confirmPassword-match": "Las contraseñas no coinciden"
   }
 }
