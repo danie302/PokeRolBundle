@@ -1,0 +1,28 @@
+{
+  "pokerol": "PokeRol",
+  "home": "Home",
+  "login": "Login",
+  "homepage": {
+    "title": "Welcome to PokéRol",
+    "description": "Your ultimate Pokémon role-playing companion",
+    "button": "Get Started",
+    "features": "Features",
+    "createCharacters": "Create Characters",
+    "manageYourTeam": "Manage Your Team",
+    "joinAdventures": "Join Adventures",
+    "createCharactersDescription": "Build and customize your Pokémon trainer with unique abilities and traits",
+    "manageYourTeamDescription": "Track and evolve your Pokémon collection with detailed stats tracking",
+    "joinAdventuresDescription": "Embark on quests with other trainers in a dynamic gameplay environment",
+    "readyToStart": "Ready to start your Pokémon adventure?",
+    "registerNow": "Register Now" 
+  },
+  "loginpage": {
+    "title": "Trainer Login",
+    "description": "Your ultimate Pokémon role-playing companion",
+    "email": "Email Address",
+    "password": "Password",
+    "button": "Login",
+    "forgotPassword": "Forgot password?",
+    "signUp": "New Trainer? Sign Up"
+  }
+}

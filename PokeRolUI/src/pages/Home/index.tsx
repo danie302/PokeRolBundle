@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { 
   Box, 
   Typography, 
@@ -11,6 +12,7 @@ import {
 } from '@mui/material';
 
 const Home: React.FC = () => {
+  const { t } = useTranslation();
   return (
     <Box sx={{ 
       minHeight: '100vh',
@@ -70,7 +72,7 @@ const Home: React.FC = () => {
                 textShadow: '3px 3px 6px rgb(5, 4, 4)'
               }}
             >
-              Welcome to PokéRol
+              {t('homepage.title')}
             </Typography>
             <Typography 
               variant="h5" 
@@ -80,7 +82,7 @@ const Home: React.FC = () => {
                 textShadow: '1px 1px 2px rgba(0,0,0,0.2)'
               }}
             >
-              Your ultimate Pokémon role-playing companion
+              {t('homepage.description')}
             </Typography>
             <Button 
               variant="contained" 
@@ -94,7 +96,7 @@ const Home: React.FC = () => {
                 }
               }}
             >
-              Get Started
+              {t('homepage.button')}
             </Button>
           </Box>
         </Paper>
@@ -112,24 +114,24 @@ const Home: React.FC = () => {
             textShadow: '3px 3px 0 #3B4CCA',
           }}
         >
-          Features
+          {t('homepage.features')}
         </Typography>
 
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 3, mb: 6 }}>
           {[
             {
-              title: 'Create Characters',
-              description: 'Build and customize your Pokémon trainer with unique abilities and traits',
+              title: t('homepage.createCharacters'),
+              description: t('homepage.createCharactersDescription'),
               image: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png'
             },
             {
-              title: 'Manage Your Team',
-              description: 'Track and evolve your Pokémon collection with detailed stats tracking',
+              title: t('homepage.manageYourTeam'),
+              description: t('homepage.manageYourTeamDescription'),
               image: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/133.png'
             },
             {
-              title: 'Join Adventures',
-              description: 'Embark on quests with other trainers in a dynamic gameplay environment',
+              title: t('homepage.joinAdventures'),
+              description: t('homepage.joinAdventuresDescription'),
               image: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/006.png'
             }
           ].map((feature, index) => (
@@ -189,7 +191,7 @@ const Home: React.FC = () => {
               mb: 2
             }}
           >
-            Ready to start your Pokémon adventure?
+            {t('homepage.readyToStart')}
           </Typography>
           <Button
             variant="contained"
@@ -203,7 +205,7 @@ const Home: React.FC = () => {
               }
             }}
           >
-            Register Now
+            {t('homepage.registerNow')}
           </Button>
         </Paper>
       </Container>

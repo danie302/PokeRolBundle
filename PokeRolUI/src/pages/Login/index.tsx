@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Paper,
@@ -11,8 +12,8 @@ import {
 } from '@mui/material';
 
 const Login: React.FC = () => {
+  const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
-
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -132,7 +133,7 @@ const Login: React.FC = () => {
               maxWidth: '80%'
             }}
           >
-            Your ultimate Pokémon role-playing companion
+            {t('loginpage.description')}
           </Typography>
           {/* Decorative stars/sparkles */}
           {[...Array(5)].map((_, i) => (
@@ -181,7 +182,7 @@ const Login: React.FC = () => {
               textShadow: '3px 3px 0 #000, -1px -1px 0 #FF0000'
             }}
           >
-            Trainer Login
+            {t('loginpage.title')}
           </Typography>
           
           <Box component="form" sx={{ mt: 1 }}>
@@ -190,7 +191,7 @@ const Login: React.FC = () => {
               required
               fullWidth
               id="email"
-              label="Email Address"
+              label={t('loginpage.email')}
               name="email"
               autoComplete="email"
               autoFocus
@@ -201,7 +202,7 @@ const Login: React.FC = () => {
               required
               fullWidth
               name="password"
-              label="Password"
+              label={t('loginpage.password')}
               type={showPassword ? 'text' : 'password'}
               id="password"
               autoComplete="current-password"
@@ -230,7 +231,7 @@ const Login: React.FC = () => {
                 '&:hover': { bgcolor: '#990000' }
               }}
             >
-              Login
+              {t('loginpage.button')}
             </Button>
             
             <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 2, mb: 3 }}>
@@ -239,14 +240,14 @@ const Login: React.FC = () => {
                 size="small"
                 sx={{ color: '#3B4CCA' }}
               >
-                Forgot password?
+                {t('loginpage.forgotPassword')}
               </Button>
               <Button
                 variant="text"
                 size="small"
                 sx={{ color: '#3B4CCA' }}
               >
-                New Trainer? Sign Up
+                {t('loginpage.signUp')}
               </Button>
             </Box>
           </Box>

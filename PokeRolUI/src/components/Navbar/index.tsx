@@ -1,10 +1,9 @@
-import { Toolbar, Typography } from "@mui/material";
-import { AppBar } from "@mui/material";
-import { Box } from "@mui/material";
-import { Button } from "@mui/material";
+import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from "react-router-dom";
+import { AppBar, Button, Toolbar, Typography, Box } from "@mui/material";
 
 const Navbar = () => {
+    const { t } = useTranslation();
     return (
         <AppBar position="static" sx={{ 
             backgroundColor: '#CC0000', // Pokéball red
@@ -24,7 +23,7 @@ const Navbar = () => {
                   textShadow: '3px 3px 0 #3B4CCA, -1px -1px 0 #FF0000',
                 }}
               >
-                PokéRol
+                {t('pokerol')}
               </Typography>
               <Box sx={{ display: 'flex', gap: 2 }}>
                 <Button 
@@ -38,7 +37,7 @@ const Navbar = () => {
                     textShadow: '3px 3px 0 #3B4CCA, -1px -1px 0 #FF0000'
                   }}
                 >
-                  Home
+                  {t('home')}
                 </Button>
                 <Button 
                   component={RouterLink} 
@@ -51,7 +50,7 @@ const Navbar = () => {
                     textShadow: '3px 3px 0 #3B4CCA, -1px -1px 0 #FF0000'
                   }}
                 >
-                  Login
+                  {t('login')}
                 </Button>
               </Box>
             </Toolbar>
