@@ -13,12 +13,15 @@ import {
 import { Link as RouterLink } from 'react-router-dom';
 import { registerValidator } from '../../utils/formValidator';
 import { RegisterUserData, RegisterValidationErrors } from '../../types/forms';
+import { registerNewUser } from '../../services/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Register: React.FC = () => {
   const { t } = useTranslation();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [validationErrors, setValidationErrors] = useState<RegisterValidationErrors>({});
+  const navigate = useNavigate();
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -27,7 +30,7 @@ const Register: React.FC = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const newUserData: RegisterUserData = {
@@ -44,8 +47,18 @@ const Register: React.FC = () => {
       setValidationErrors(errors);
       return;
     }
+    try {
+      const response = await registerNewUser(newUserData);
+      if (response.status === 201) {
+        navigate('/');
+      }
+    } catch (error: any) {
+      setValidationErrors({
+        email: 'Email already in use',
+        username: 'Username already in use',
+      });
+    }
     
-    // TODO: Send data to backend
   };    
   
 

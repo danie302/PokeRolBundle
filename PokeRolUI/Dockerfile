@@ -15,6 +15,7 @@ COPY ./tsconfig*.json ./
 COPY ./.env ./.env
 COPY ./public ./public
 COPY ./index.html ./index.html
+COPY ./vite.config.ts ./vite.config.ts
 
 # Expose the port the app runs on
 EXPOSE 5173

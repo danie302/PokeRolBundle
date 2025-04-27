@@ -5,7 +5,7 @@ import teamRoutes from './routes/team';
 import userRoutes from './routes/users';
 import pokemonRoutes from './routes/pokemon';
 import authRoutes from './routes/auth';
-
+import cors from 'cors';
 // Load environment variables
 dotenv.config({
   path: '.env'
@@ -17,6 +17,9 @@ const port = process.env.PORT || 3000;
 
 // Parse JSON bodies
 app.use(express.json());
+
+// Enable CORS
+app.use(cors());
 
 // Connect to database
 connectToDB();
