@@ -17,3 +17,19 @@ export const loginUser = async (userData: LoginUserData) => {
     const response = await axios.post('/auth/login', userData);
     return response;
 };
+
+export const getUser = async () => {
+    const token = localStorage.getItem('token');
+    const { data } = await axios.get('/users/me', {
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    });
+    const user = {
+        id: data._id,
+        username: data.username,
+        name: data.name,
+        email: data.email,
+    }
+    return user;
+};

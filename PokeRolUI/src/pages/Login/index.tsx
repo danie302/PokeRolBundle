@@ -10,12 +10,14 @@ import {
   InputAdornment,
   IconButton
 } from '@mui/material';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { LoginUserData, LoginValidationErrors } from '../../types/forms';
 import { loginValidator } from '../../utils/formValidator';
+import { loginUser } from '../../services/auth';
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
 
   const [validationErrors, setValidationErrors] = useState<LoginValidationErrors>({});
@@ -23,7 +25,7 @@ const Login: React.FC = () => {
     setShowPassword(!showPassword);
   };
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.target as HTMLFormElement);
     const loginUserData: LoginUserData = {
@@ -37,7 +39,16 @@ const Login: React.FC = () => {
       return;
     }
 
-    // TODO: Send data to backend
+    const response = await loginUser(loginUserData);
+    if (response.status === 200) {
+      localStorage.setItem('token', response.data.token);
+      navigate('/dashboard');
+    } else {
+      setValidationErrors({
+        email: 'Invalid email or password',
+        password: 'Invalid email or password',
+      });
+    }
   };
 
   return (

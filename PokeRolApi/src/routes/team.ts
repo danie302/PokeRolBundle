@@ -7,9 +7,9 @@ import { verifyToken } from './auth';
 // Define router
 const router = express.Router();
 
-// Get all teams
-router.get('/', verifyToken, async (req: Request, res: Response<ITeam[] | ErrorResponse>) => {
-    const teams = await Team.find();
+// Get a teams by user ID
+router.get('/user/:id', verifyToken, async (req: Request<{ id: string }>, res: Response<ITeam[] | ErrorResponse>) => {
+    const teams = await Team.find({ owner: req.params.id });
     if(!teams) {
         res.status(404).json({ message: 'No teams found' });
         return;
@@ -27,9 +27,9 @@ router.get(':id', verifyToken, async (req: Request<{ id: string }>, res: Respons
     res.json(team);
 });
 
-// Get a teams by user ID
-router.get('/user/:id', verifyToken, async (req: Request<{ id: string }>, res: Response<ITeam[] | ErrorResponse>) => {
-    const teams = await Team.find({ userId: req.params.id });
+// Get all teams
+router.get('/', verifyToken, async (req: Request, res: Response<ITeam[] | ErrorResponse>) => {
+    const teams = await Team.find();
     if(!teams) {
         res.status(404).json({ message: 'No teams found' });
         return;
@@ -60,6 +60,7 @@ router.put('/:id', verifyToken, async (req: Request<{ id: string }, {}, ITeam>, 
 
 // Delete a team
 router.delete('/:id', verifyToken, async (req: Request<{ id: string }>, res: Response<ITeam | ErrorResponse>) => {
+    console.log('Deleting team', req.params.id);
     const team = await Team.findByIdAndDelete(req.params.id);
     if(!team) {
         res.status(404).json({ message: 'Team not found' });

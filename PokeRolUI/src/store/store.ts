@@ -9,7 +9,7 @@ export const store = configureStore({
   reducer: {
     user: userReducer,
     pokemon: pokemonReducer,
-    team: teamReducer,
+    teams: teamReducer,
   },
 })
 

@@ -1,4 +1,4 @@
-import Router from './Router.tsx';
+import Router from './router.tsx';
 import { StrictMode } from 'react';
 import { Provider } from 'react-redux';
 import { store } from './store/store.ts';

@@ -1,7 +1,6 @@
 import express, { Request, Response, NextFunction } from 'express';
 import User from '../models/user';
-import { ErrorResponse } from '../types/request';
-import { IUser } from '../types/user';
+import { ErrorResponse, LoginRequest } from '../types/request';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -9,16 +8,16 @@ import jwt from 'jsonwebtoken';
 const router = express.Router();
 
 // Login a user
-router.post('/login', async (req: Request<{}, {}, IUser>, res: Response<{ token: string } | ErrorResponse>) => {
-    const { username, password } = req.body;
-    const user = await User.findOne({ username });
+router.post('/login', async (req: Request<{}, {}, LoginRequest>, res: Response<{ token: string } | ErrorResponse>) => {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
     if(!user) {
-        res.status(401).json({ message: 'Invalid username or password' });
+        res.status(401).json({ message: 'Invalid email or password' });
         return;
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if(!isPasswordValid) {
-        res.status(401).json({ message: 'Invalid username or password' });
+        res.status(401).json({ message: 'Invalid email or password' });
         return;
     }
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || '', { expiresIn: '1h' });

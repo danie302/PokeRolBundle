@@ -10,11 +10,11 @@ export const teamSlice = createSlice({
     name: 'teams',
     initialState,
     reducers: {
-        setTeams: (state, action: PayloadAction<Teams>) => {
-            state = action.payload;
+        setTeams: (_state, action: PayloadAction<Teams>) => {
+            return action.payload;
         },
-        clearTeams: (state) => {
-            state = initialState;
+        clearTeams: () => {
+            return initialState;
         },
         addTeam: (state, action: PayloadAction<Team>) => {
             state.teams.push(action.payload);

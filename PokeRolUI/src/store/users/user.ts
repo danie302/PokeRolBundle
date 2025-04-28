@@ -19,14 +19,14 @@ export const userSlice = createSlice({
     name: 'user',
     initialState,
     reducers: {
-        setUser: (state, action: PayloadAction<UserState>) => {
-            state = action.payload;
+        setUser: (_state, action: PayloadAction<UserState>) => {
+            return action.payload;
         },
-        clearUser: (state) => {
-            state = initialState;
+        clearUser: () => {
+            return initialState;
         },
         updateUser: (state, action: PayloadAction<UserState>) => {
-            state = { ...state, ...action.payload };
+            return { ...state, ...action.payload };
         },
     },
 });

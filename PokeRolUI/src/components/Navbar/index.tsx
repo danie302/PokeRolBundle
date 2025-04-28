@@ -4,23 +4,42 @@ import { Box } from "@mui/material";
 import { Button, IconButton, Drawer, List, ListItem, ListItemText } from "@mui/material";
 import { Link as RouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const Navbar = () => {
   const { t } = useTranslation();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+  }, []);
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);
   };
 
-  const navItems = [
-    { text: t('home'), path: '/' },
-    { text: t('login'), path: '/login' },
-    { text: t('register'), path: '/register' }
-  ];
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setIsLoggedIn(false);
+    window.location.href = '/';
+  };
+
+  // Create navigation items based on auth state
+  const navItems = isLoggedIn 
+    ? [
+        { text: t('dashboard'), path: '/dashboard' },
+        { text: t('logout'), action: handleLogout }
+      ]
+    : [
+        { text: t('home'), path: '/' },
+        { text: t('login'), path: '/login' },
+        { text: t('register'), path: '/register' }
+      ];
 
   const drawer = (
     <Box
@@ -55,14 +74,17 @@ const Navbar = () => {
       <List>
         {navItems.map((item) => (
           <ListItem
-            key={item.path}
-            component={RouterLink}
+            key={item.text}
+            component={item.path ? RouterLink : 'button'}
             to={item.path}
+            onClick={item.action}
             sx={{
               '&:hover': {
                 backgroundColor: 'rgba(59, 76, 202, 0.1)'
               },
-              mb: 1
+              mb: 1,
+              textAlign: 'center',
+              cursor: 'pointer'
             }}
           >
             <ListItemText
@@ -150,45 +172,38 @@ const Navbar = () => {
           </>
         ) : (
           <Box sx={{ display: 'flex', gap: 2 }}>
-            <Button
-              component={RouterLink}
-              to="/"
-              color="inherit"
-              sx={{
-                fontFamily: '"Pokemon Solid", sans-serif',
-                borderRadius: '20px',
-                fontSize: '1.2rem',
-                textShadow: '3px 3px 0 #3B4CCA, -1px -1px 0 #FF0000'
-              }}
-            >
-              {t('home')}
-            </Button>
-            <Button
-              component={RouterLink}
-              to="/login"
-              color="inherit"
-              sx={{
-                fontFamily: '"Pokemon Solid", sans-serif',
-                borderRadius: '20px',
-                fontSize: '1.2rem',
-                textShadow: '3px 3px 0 #3B4CCA, -1px -1px 0 #FF0000'
-              }}
-            >
-              {t('login')}
-            </Button>
-            <Button
-              component={RouterLink}
-              to="/register"
-              color="inherit"
-              sx={{
-                fontFamily: '"Pokemon Solid", sans-serif',
-                borderRadius: '20px',
-                fontSize: '1.2rem',
-                textShadow: '3px 3px 0 #3B4CCA, -1px -1px 0 #FF0000'
-              }}
-            >
-              {t('register')}
-            </Button>
+            {navItems.map((item) => (
+              item.path ? (
+                <Button
+                  key={item.text}
+                  component={RouterLink}
+                  to={item.path}
+                  color="inherit"
+                  sx={{
+                    fontFamily: '"Pokemon Solid", sans-serif',
+                    borderRadius: '20px',
+                    fontSize: '1.2rem',
+                    textShadow: '3px 3px 0 #3B4CCA, -1px -1px 0 #FF0000'
+                  }}
+                >
+                  {item.text}
+                </Button>
+              ) : (
+                <Button
+                  key={item.text}
+                  onClick={item.action}
+                  color="inherit"
+                  sx={{
+                    fontFamily: '"Pokemon Solid", sans-serif',
+                    borderRadius: '20px',
+                    fontSize: '1.2rem',
+                    textShadow: '3px 3px 0 #3B4CCA, -1px -1px 0 #FF0000'
+                  }}
+                >
+                  {item.text}
+                </Button>
+              )
+            ))}
           </Box>
         )}
       </Toolbar>

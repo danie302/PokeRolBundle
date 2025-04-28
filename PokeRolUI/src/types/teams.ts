@@ -11,3 +11,17 @@ export interface Team {
 export interface Teams {
     teams: Team[];
 }
+
+export interface TeamRequest {
+    owner: string;
+    name: string;
+    description: string;
+    pokemons: string[];
+  }
+  
+  export interface TeamResponse {
+    _id: string;
+    name: string;
+    description: string;
+    pokemons: string[];
+  }
