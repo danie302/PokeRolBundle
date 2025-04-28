@@ -27,7 +27,7 @@ export interface Pokemon {
     type: string[];
     level: number;
     experience: number;
-    nature: string;
+    nature?: string;
     ability: Ability;
     weight: number;
     height: number;

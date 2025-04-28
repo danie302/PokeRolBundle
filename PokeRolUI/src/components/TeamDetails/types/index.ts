@@ -14,6 +14,7 @@ export interface PokemonSearchResult {
       };
     };
   };
+  nature: string;
   types: {
     slot: number;
     type: {

@@ -58,17 +58,6 @@ const TeamDetails: React.FC = () => {
   const handlePokemonAdded = () => {
     // The team state will be updated from the parent component
     setIsAddPokemonModalOpen(false);
-    
-    // In a real implementation, you would refresh the team data here
-    // For now, we'll use the mock data update
-    if (team && teamId) {
-      // Here you would make an API call to get the updated team
-      // For example: const updatedTeam = await fetchTeam(teamId);
-      // setTeam(updatedTeam);
-      
-      // Just for demo purpose, we'll add a mock Pokémon
-      console.log('Pokémon added to team successfully!');
-    }
   };
 
   if (error || !team) {

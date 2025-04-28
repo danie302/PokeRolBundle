@@ -61,7 +61,8 @@
     "addFirstPokemon": "Add your first Pokemon to your team",
     "noPokemon": "No Pokemon found",
     "addToTeam": "Add to Team",
-    "selectDifferent": "Select different Pokemon"
+    "selectDifferent": "Select different Pokemon",
+    "errorAddingPokemon": "Error adding Pokemon to team"
   },
   "search": {
     "pokemonNameOrId": "Search for a Pokemon by name or ID",

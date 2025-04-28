@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Team, TeamResponse, TeamRequest } from '../types/teams';
 import { Pokemon } from '../types/pokemon';
+import { getPokemonById } from './pokemon';
 
 // Function to fetch user teams
 export const fetchUserTeams = async (userId: string) => {
@@ -12,12 +13,30 @@ export const fetchUserTeams = async (userId: string) => {
         Authorization: `Bearer ${token}`
       }
     });
-    const teams = response.data.map((team: TeamResponse) => ({
-      id: team._id,
-      name: team.name,
-      description: team.description,
-      pokemons: team.pokemons
-    }));
+    
+    // Map teams and resolve all Pokemon data
+    const teams = await Promise.all(
+      response.data.map(async (team: TeamResponse) => {
+        const pokemons = await Promise.all(
+          team.pokemons.map(async (pokemonId: string) => {
+            const pokemonData = await getPokemonById(pokemonId);
+            return {
+              id: pokemonData._id,
+              ...pokemonData
+            }
+          })
+        );
+        
+        return {
+          id: team._id,
+          name: team.name,
+          description: team.description,
+          owner: team.owner,
+          pokemons: pokemons
+        };
+      })
+    );
+    
     return teams;
   } catch (error) {
     console.error('Error fetching teams:', error);
@@ -50,8 +69,9 @@ export const createTeam = async (teamData: TeamRequest) => {
 };
 
 // Function to update an existing team
-export const updateTeam = async (teamId: number, teamData: Team) => {
+export const updateTeam = async (teamId: string, teamData: Team) => {
   const token = localStorage.getItem('token');
+  console.log('TEAM DATA', teamData);
 
   const teamRequest: TeamRequest = {
     owner: teamData.owner,

@@ -23,5 +23,6 @@ export interface TeamRequest {
     _id: string;
     name: string;
     description: string;
+    owner: string;
     pokemons: string[];
   }

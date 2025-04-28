@@ -1,7 +1,7 @@
 import React from 'react';
 import { Grid, Box, CardMedia, Typography } from '@mui/material';
 import { Pokemon } from '../../types/pokemon';
-
+import { capitalizeFirstLetter } from '../../utils/utils';
 interface PokemonItemProps {
   pokemon: Pokemon;
 }
@@ -11,7 +11,14 @@ const PokemonItem: React.FC<PokemonItemProps> = ({ pokemon }) => {
   const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.isShiny ? 'shiny/' : ''}${pokemon.pokeApiId}.png`;
   
   return (
-    <Grid size={3} key={pokemon.id}>
+    <Grid size={3} sx={{
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
+      mt: 1
+    }} key={pokemon.id}>
       <Box
         sx={{
           display: 'flex',
@@ -31,7 +38,7 @@ const PokemonItem: React.FC<PokemonItemProps> = ({ pokemon }) => {
           alt={pokemon.name}
         />
         <Typography variant="caption" align="center">
-          {pokemon.name}
+          {capitalizeFirstLetter(pokemon.name)}
         </Typography>
       </Box>
     </Grid>

@@ -36,7 +36,7 @@ const pokemonSchema = new mongoose.Schema({
     height: { type: Number, required: true },
     level: { type: Number, required: true },
     experience: { type: Number, required: true },
-    nature: { type: String, required: true },
+    nature: { type: String },
     stats: { type: statsSchema, required: true },
     ivs: { type: statsSchema, required: true },
     evs: { type: statsSchema, required: true },

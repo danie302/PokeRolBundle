@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import {
   Dialog,
-  DialogTitle,
   DialogContent,
   DialogActions,
-  TextField,
   Button,
   Box,
   Typography,
-  CircularProgress,
-  InputAdornment,
-  IconButton,
   Chip,
   Paper,
   Divider,
@@ -21,16 +16,18 @@ import {
 } from '@mui/material';
 import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import StarIcon from '@mui/icons-material/Star';
-import InfoIcon from '@mui/icons-material/Info';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { Pokemon } from '../../types/pokemon';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../store/store';
+import { RootState, useAppDispatch } from '../../store/store';
 import { typeColors } from './constants/typeColors';
 import { PokemonSearchResult, PokemonListResponse, AddPokemonModalProps } from './types';
 import SearchBar from './AddPokemonModal/SearchBar';
 import AbilitySelector from './AddPokemonModal/AbilitySelector';
+import { createPokemon } from '../../services/pokemon';
+import { updateTeam } from '../../services/teams';
+import { setTeams } from '../../store/teams/teams';
 
 interface Ability {
   name: string;
@@ -54,6 +51,9 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
   const [isShiny, setIsShiny] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
   const user = useSelector((state: RootState) => state.user);
+  const teams = useSelector((state: RootState) => state.teams);
+  const team = teams.teams.find((team) => team.id === teamId);
+  const dispatch = useAppDispatch();
 
   // Clear search results when modal is closed
   useEffect(() => {
@@ -121,12 +121,6 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter') {
-      handleSearch();
-    }
-  };
-
   const handleSelectPokemon = (pokemon: PokemonSearchResult) => {
     setSelectedPokemon(pokemon);
     setSelectedAbility(null);
@@ -135,17 +129,15 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
 
   const handleAddToTeam = async () => {
     if (!selectedPokemon || !selectedAbility) return;
-    
     try {
       // Create a new Pokémon object that matches your Pokemon interface
-      const newPokemon: Partial<Pokemon> = {
+      const newPokemon: Omit<Pokemon, 'id'> = {
         pokeApiId: selectedPokemon.id.toString(),
         name: selectedPokemon.name,
         type: selectedPokemon.types.map(t => t.type.name),
         isShiny: isShiny, // Use the selected shiny state
         level: 1, // Default level
         experience: 0,
-        nature: '',
         stats: {
           hp: selectedPokemon.stats[0].base_stat,
           attack: selectedPokemon.stats[1].base_stat,
@@ -181,14 +173,23 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
         userId: user.id,
       };
 
-      console.log('SELECTED POKEMON', selectedPokemon);
-      console.log('SELECTED ABILITY', selectedAbility);
-      console.log('NEW POKEMON', newPokemon);
+      const createdPokemon = await createPokemon(newPokemon);
 
-      // Here you would make an API call to add the Pokémon to the team
-      // For example:
-      // await axios.post(`/api/teams/${teamId}/pokemon`, newPokemon);
-      
+      // Update the team with the new Pokémon
+      if (!team) {
+        console.error('Team not found:', teamId);
+        setError(t('team.errorTeamNotFound'));
+        return;
+      }
+
+      const newTeam = {
+        ...team,
+        pokemons: [...team.pokemons, createdPokemon]
+      }
+
+      await updateTeam(teamId, newTeam);
+      dispatch(setTeams({ teams: [newTeam] }));
+
       onPokemonAdded();
       onClose();
     } catch (err) {

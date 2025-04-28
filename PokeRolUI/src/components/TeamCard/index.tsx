@@ -8,7 +8,8 @@ import {
   Box,
   IconButton,
   Divider,
-  Chip
+  Chip,
+  useMediaQuery
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useNavigate } from 'react-router-dom';
@@ -22,6 +23,7 @@ interface TeamCardProps {
 
 const TeamCard: React.FC<TeamCardProps> = ({ team, onDelete }) => {
   const navigate = useNavigate();
+  const isMobile = useMediaQuery('(max-width: 600px)');
   
   const handleCardClick = () => {
     navigate(`/team/${team.id}`);
@@ -75,13 +77,21 @@ const TeamCard: React.FC<TeamCardProps> = ({ team, onDelete }) => {
           </Typography>
           <Divider sx={{ mb: 2 }} />
           <Grid container spacing={1}>
-            {team.pokemons.slice(0, 4).map((pokemon: Pokemon) => (
-              <PokemonItem 
-                key={pokemon.id} 
-                pokemon={pokemon} 
-              />
-            ))}
-            {team.pokemons.length > 4 && (
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+            }}>
+              {team.pokemons.slice(0, isMobile ? 4 : 6).map((pokemon: Pokemon) => (
+                <PokemonItem 
+                  key={pokemon.id} 
+                  pokemon={pokemon} 
+                />
+              ))}
+            </Box>
+            {team.pokemons.length > (isMobile ? 4 : 6) && (
               <Box sx={{ 
                 display: 'flex', 
                 alignItems: 'center', 
@@ -90,7 +100,7 @@ const TeamCard: React.FC<TeamCardProps> = ({ team, onDelete }) => {
                 mt: 1 
               }}>
                 <Typography variant="body2" color="primary">
-                  +{team.pokemons.length - 4} more
+                  +{team.pokemons.length - (isMobile ? 4 : 6)} more
                 </Typography>
               </Box>
             )}

@@ -1,11 +1,12 @@
 import React from 'react';
-import { 
-  Paper, 
-  Typography, 
-  Box, 
-  Grid, 
+import {
+  Paper,
+  Typography,
+  Box,
+  Grid,
   Button,
-  Divider
+  Divider,
+  useMediaQuery
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
@@ -20,11 +21,12 @@ interface PokemonListProps {
 
 const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => {
   const { t } = useTranslation();
-  
+  const isMobile = useMediaQuery('(max-width: 600px)');
+
   return (
-    <Paper 
+    <Paper
       elevation={0}
-      sx={{ 
+      sx={{
         borderRadius: 2,
         bgcolor: 'rgba(255, 255, 255, 0.9)',
         boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
@@ -32,10 +34,10 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => 
         overflow: 'hidden'
       }}
     >
-      <Box sx={{ 
-        display: 'flex', 
-        justifyContent: 'space-between', 
-        alignItems: 'center', 
+      <Box sx={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         p: 3,
         background: 'rgba(59, 76, 202, 0.05)'
       }}>
@@ -45,12 +47,12 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => 
             {t('team.pokemon')}
           </Typography>
         </Box>
-        <Button 
+        <Button
           variant="contained"
           startIcon={<AddIcon />}
           onClick={onAddPokemon}
           size="small"
-          sx={{ 
+          sx={{
             bgcolor: '#3B4CCA',
             '&:hover': {
               bgcolor: '#2A3A9B'
@@ -60,12 +62,12 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => 
           {t('team.addPokemon')}
         </Button>
       </Box>
-      
+
       <Divider />
-      
+
       {pokemons.length === 0 ? (
-        <Box sx={{ 
-          textAlign: 'center', 
+        <Box sx={{
+          textAlign: 'center',
           py: 8,
           px: 3,
           display: 'flex',
@@ -77,11 +79,11 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => 
           <Typography variant="h6" color="text.secondary" sx={{ mb: 2 }}>
             {t('team.noPokemon')}
           </Typography>
-          <Button 
-            variant="contained" 
+          <Button
+            variant="contained"
             startIcon={<AddIcon />}
             onClick={onAddPokemon}
-            sx={{ 
+            sx={{
               bgcolor: '#3B4CCA',
               '&:hover': {
                 bgcolor: '#2A3A9B'
@@ -94,10 +96,11 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => 
       ) : (
         <Box sx={{ p: 3 }}>
           <Grid container spacing={2}>
-            {pokemons.map((pokemon: Pokemon) => (
-              <Grid size={2} key={pokemon.id}>
-                <Box sx={{ 
-                  p: 2, 
+            {pokemons.slice(0, isMobile ? 4 : 6).map((pokemon: Pokemon) => (
+                <Box sx={{
+                  key: pokemon.id,
+                  p: 2,
+                  margin: 'auto',
                   borderRadius: 2,
                   transition: '0.3s all',
                   '&:hover': {
@@ -107,9 +110,25 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => 
                 }}>
                   <PokemonItem pokemon={pokemon} />
                 </Box>
-              </Grid>
             ))}
           </Grid>
+          {pokemons.length > (isMobile ? 4 : 6) && (
+            <Grid size={2}>
+              <Box sx={{
+                p: 2,
+                borderRadius: 2,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                mt: 1
+              }}>
+                <Typography variant="body2" color="primary">
+                  +{pokemons.length - (isMobile ? 4 : 6)} more
+                </Typography>
+              </Box>
+            </Grid>
+          )}
         </Box>
       )}
     </Paper>
