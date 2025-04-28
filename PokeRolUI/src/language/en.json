@@ -74,6 +74,10 @@
   },
   "pokemon": {
     "normal": "Normal",
-    "shiny": "Shiny"
+    "shiny": "Shiny",
+    "appearance": "Appearance",
+    "abilities": "Abilities",
+    "selectAbility": "Select Ability",
+    "hiddenAbility": "Hidden Ability"
   }
 }

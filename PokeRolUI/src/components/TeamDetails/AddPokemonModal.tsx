@@ -15,18 +15,28 @@ import {
   Paper,
   Divider,
   Zoom,
-  Fade
+  Fade,
+  Tab,
+  Tabs
 } from '@mui/material';
 import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import StarIcon from '@mui/icons-material/Star';
+import InfoIcon from '@mui/icons-material/Info';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { Pokemon } from '../../types/pokemon';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { typeColors } from './constants/typeColors';
-import { PokemonListResponse,AddPokemonModalProps, PokemonSearchResult } from './types';
+import { PokemonSearchResult, PokemonListResponse, AddPokemonModalProps } from './types';
 import SearchBar from './AddPokemonModal/SearchBar';
+import AbilitySelector from './AddPokemonModal/AbilitySelector';
+
+interface Ability {
+  name: string;
+  description: string;
+  is_hidden: boolean;
+}
 
 const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
   open,
@@ -39,8 +49,10 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
   const [isSearching, setIsSearching] = useState(false);
   const [searchResults, setSearchResults] = useState<PokemonSearchResult[]>([]);
   const [selectedPokemon, setSelectedPokemon] = useState<PokemonSearchResult | null>(null);
+  const [selectedAbility, setSelectedAbility] = useState<Ability | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isShiny, setIsShiny] = useState(false);
+  const [activeTab, setActiveTab] = useState(0);
   const user = useSelector((state: RootState) => state.user);
 
   // Clear search results when modal is closed
@@ -49,8 +61,10 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
       setSearchQuery('');
       setSearchResults([]);
       setSelectedPokemon(null);
+      setSelectedAbility(null);
       setError(null);
       setIsShiny(false);
+      setActiveTab(0);
     }
   }, [open]);
 
@@ -115,10 +129,12 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
 
   const handleSelectPokemon = (pokemon: PokemonSearchResult) => {
     setSelectedPokemon(pokemon);
+    setSelectedAbility(null);
+    setActiveTab(0);
   };
 
   const handleAddToTeam = async () => {
-    if (!selectedPokemon) return;
+    if (!selectedPokemon || !selectedAbility) return;
     
     try {
       // Create a new Pokémon object that matches your Pokemon interface
@@ -146,19 +162,19 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
           specialDefense: 0,
           speed: 0,
         },
-          evs: {
-            hp: 0,
-            attack: 0,
-            specialAttack: 0,
-            defense: 0,
-            specialDefense: 0,
-            speed: 0,
+        evs: {
+          hp: 0,
+          attack: 0,
+          specialAttack: 0,
+          defense: 0,
+          specialDefense: 0,
+          speed: 0,
         },
         weight: selectedPokemon.weight,
         height: selectedPokemon.height,
         ability: {
-          name: selectedPokemon.abilities[0].ability.name,
-          description: selectedPokemon.abilities[0].ability.url
+          name: selectedAbility.name,
+          description: selectedAbility.description
         },
         moves: [],
         description: '',
@@ -166,6 +182,7 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
       };
 
       console.log('SELECTED POKEMON', selectedPokemon);
+      console.log('SELECTED ABILITY', selectedAbility);
       console.log('NEW POKEMON', newPokemon);
 
       // Here you would make an API call to add the Pokémon to the team
@@ -213,7 +230,7 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
         }
       }}
     >
-      <DialogTitle sx={{ 
+      <Box sx={{ 
         bgcolor: '#3B4CCA', 
         color: 'white',
         display: 'flex',
@@ -249,16 +266,18 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
         <Typography variant="h6" sx={{ fontWeight: 'bold', position: 'relative', zIndex: 1 }}>
           {t('team.addPokemon')}
         </Typography>
-      </DialogTitle>
+      </Box>
 
       <DialogContent sx={{ p: 3 }}>
         {/* Search Bar */}
-        <SearchBar
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          handleSearch={handleSearch}
-          isSearching={isSearching}
-        />
+        {!selectedPokemon && (
+          <SearchBar
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            handleSearch={handleSearch}
+            isSearching={isSearching}
+          />
+        )}
 
         {/* Error Message */}
         {error && (
@@ -487,71 +506,35 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
                 </Box>
               </Box>
               
-              <Box sx={{ p: 3, textAlign: 'center' }}>
-                <Box sx={{ 
-                  display: 'flex', 
-                  justifyContent: 'center',
-                  mb: 3
-                }}>
-                  <Box 
-                    onClick={() => setIsShiny(false)}
-                    sx={{ 
-                      mx: 1,
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      transform: !isShiny ? 'scale(1.1)' : 'scale(1)',
-                      position: 'relative',
-                      '&:hover': {
-                        transform: 'scale(1.15)'
-                      }
-                    }}
-                  >
-                    <Box sx={{ 
-                      width: 120, 
-                      height: 120, 
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      border: !isShiny ? '3px solid #3B4CCA' : '1px solid rgba(0,0,0,0.1)',
-                      boxShadow: !isShiny ? '0 0 0 2px rgba(59, 76, 202, 0.3)' : 'none',
-                      mb: 1,
-                      overflow: 'hidden',
-                      position: 'relative'
-                    }}>
-                      <Box sx={{
-                        position: 'absolute',
-                        width: '100%',
-                        height: '100%',
-                        background: 'radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%)',
-                      }} />
-                      <img 
-                        src={selectedPokemon.sprites.front_default}
-                        alt={selectedPokemon.name}
-                        style={{ 
-                          width: '100%', 
-                          height: '100%', 
-                          objectFit: 'contain',
-                          filter: !isShiny ? 'none' : 'grayscale(40%)'
-                        }}
-                      />
-                    </Box>
-                    <Typography variant="caption" sx={{ 
-                      color: !isShiny ? '#3B4CCA' : 'text.secondary',
-                      fontWeight: !isShiny ? 'bold' : 'normal'
-                    }}>
-                      {t('pokemon.normal')}
-                    </Typography>
-                  </Box>
-                  
-                  {selectedPokemon.sprites.front_shiny && (
+              {/* Tabs for Appearance and Abilities */}
+              <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+                <Tabs 
+                  value={activeTab} 
+                  onChange={(_, newValue) => setActiveTab(newValue)}
+                  centered
+                  sx={{ bgcolor: 'rgba(0,0,0,0.02)' }}
+                >
+                  <Tab label={t('pokemon.appearance')} />
+                  <Tab label={t('pokemon.abilities')} />
+                </Tabs>
+              </Box>
+
+              {/* Appearance Tab */}
+              {activeTab === 0 && (
+                <Box sx={{ p: 3, textAlign: 'center' }}>
+                  <Box sx={{ 
+                    display: 'flex', 
+                    justifyContent: 'center',
+                    mb: 3
+                  }}>
                     <Box 
-                      onClick={() => setIsShiny(true)}
+                      onClick={() => setIsShiny(false)}
                       sx={{ 
                         mx: 1,
                         cursor: 'pointer',
                         transition: 'all 0.2s ease',
-                        transform: isShiny ? 'scale(1.1)' : 'scale(1)',
+                        transform: !isShiny ? 'scale(1.1)' : 'scale(1)',
+                        position: 'relative',
                         '&:hover': {
                           transform: 'scale(1.15)'
                         }
@@ -564,8 +547,8 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        border: isShiny ? '3px solid #FFD700' : '1px solid rgba(0,0,0,0.1)',
-                        boxShadow: isShiny ? '0 0 0 2px rgba(255, 215, 0, 0.3)' : 'none',
+                        border: !isShiny ? '3px solid #3B4CCA' : '1px solid rgba(0,0,0,0.1)',
+                        boxShadow: !isShiny ? '0 0 0 2px rgba(59, 76, 202, 0.3)' : 'none',
                         mb: 1,
                         overflow: 'hidden',
                         position: 'relative'
@@ -574,57 +557,121 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
                           position: 'absolute',
                           width: '100%',
                           height: '100%',
-                          background: isShiny ? 
-                            'radial-gradient(circle, rgba(255,215,0,0.2) 0%, rgba(255,215,0,0) 70%), radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%)' : 
-                            'radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%)',
+                          background: 'radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%)',
                         }} />
                         <img 
-                          src={selectedPokemon.sprites.front_shiny}
-                          alt={`${selectedPokemon.name} shiny`}
+                          src={selectedPokemon.sprites.front_default}
+                          alt={selectedPokemon.name}
                           style={{ 
                             width: '100%', 
                             height: '100%', 
-                            objectFit: 'contain' 
+                            objectFit: 'contain',
+                            filter: !isShiny ? 'none' : 'grayscale(40%)'
                           }}
                         />
-                        {isShiny && (
-                          <Box sx={{
-                            position: 'absolute',
-                            top: 5,
-                            right: 5,
-                            width: 20,
-                            height: 20,
-                            borderRadius: '50%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            bgcolor: '#FFD700',
-                            color: 'white',
-                            zIndex: 2
-                          }}>
-                            <StarIcon sx={{ fontSize: 12 }} />
-                          </Box>
-                        )}
                       </Box>
                       <Typography variant="caption" sx={{ 
-                        color: isShiny ? '#FFD700' : 'text.secondary',
-                        fontWeight: isShiny ? 'bold' : 'normal',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center'
+                        color: !isShiny ? '#3B4CCA' : 'text.secondary',
+                        fontWeight: !isShiny ? 'bold' : 'normal'
                       }}>
-                        {isShiny && <StarIcon sx={{ fontSize: 12, mr: 0.5 }} />}
-                        {t('pokemon.shiny')}
+                        {t('pokemon.normal')}
                       </Typography>
                     </Box>
-                  )}
+                    
+                    {selectedPokemon.sprites.front_shiny && (
+                      <Box 
+                        onClick={() => setIsShiny(true)}
+                        sx={{ 
+                          mx: 1,
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          transform: isShiny ? 'scale(1.1)' : 'scale(1)',
+                          '&:hover': {
+                            transform: 'scale(1.15)'
+                          }
+                        }}
+                      >
+                        <Box sx={{ 
+                          width: 120, 
+                          height: 120, 
+                          borderRadius: '50%',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          border: isShiny ? '3px solid #FFD700' : '1px solid rgba(0,0,0,0.1)',
+                          boxShadow: isShiny ? '0 0 0 2px rgba(255, 215, 0, 0.3)' : 'none',
+                          mb: 1,
+                          overflow: 'hidden',
+                          position: 'relative'
+                        }}>
+                          <Box sx={{
+                            position: 'absolute',
+                            width: '100%',
+                            height: '100%',
+                            background: isShiny ? 
+                              'radial-gradient(circle, rgba(255,215,0,0.2) 0%, rgba(255,215,0,0) 70%), radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%)' : 
+                              'radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,255,255,0) 70%)',
+                          }} />
+                          <img 
+                            src={selectedPokemon.sprites.front_shiny}
+                            alt={`${selectedPokemon.name} shiny`}
+                            style={{ 
+                              width: '100%', 
+                              height: '100%', 
+                              objectFit: 'contain' 
+                            }}
+                          />
+                          {isShiny && (
+                            <Box sx={{
+                              position: 'absolute',
+                              top: 5,
+                              right: 5,
+                              width: 20,
+                              height: 20,
+                              borderRadius: '50%',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              bgcolor: '#FFD700',
+                              color: 'white',
+                              zIndex: 2
+                            }}>
+                              <StarIcon sx={{ fontSize: 12 }} />
+                            </Box>
+                          )}
+                        </Box>
+                        <Typography variant="caption" sx={{ 
+                          color: isShiny ? '#FFD700' : 'text.secondary',
+                          fontWeight: isShiny ? 'bold' : 'normal',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center'
+                        }}>
+                          {isShiny && <StarIcon sx={{ fontSize: 12, mr: 0.5 }} />}
+                          {t('pokemon.shiny')}
+                        </Typography>
+                      </Box>
+                    )}
+                  </Box>
                 </Box>
+              )}
 
+              {/* Abilities Tab */}
+              {activeTab === 1 && (
+                <Box sx={{ p: 2 }}>
+                  <AbilitySelector
+                    abilities={selectedPokemon.abilities}
+                    selectedAbility={selectedAbility}
+                    onSelectAbility={setSelectedAbility}
+                  />
+                </Box>
+              )}
+
+              <Box sx={{ p: 2, display: 'flex', justifyContent: 'center' }}>
                 <Button 
                   variant="text"
                   color="primary"
                   onClick={() => setSelectedPokemon(null)}
-                  sx={{ mt: 2 }}
                 >
                   {t('team.selectDifferent')}
                 </Button>
@@ -654,7 +701,7 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
         <Button 
           onClick={handleAddToTeam}
           variant="contained"
-          disabled={!selectedPokemon}
+          disabled={!selectedPokemon || !selectedAbility}
           sx={{ 
             bgcolor: '#3B4CCA',
             borderRadius: 2,
