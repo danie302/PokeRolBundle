@@ -10,18 +10,16 @@ import {
   Divider,
   Chip
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { Pokemon } from '../../types/pokemon';
 import PokemonItem from '../PokemonItem';
 
 interface TeamCardProps {
   team: any;
-  onEdit: (id: string) => void;
   onDelete: (id: string) => void;
 }
 
-const TeamCard: React.FC<TeamCardProps> = ({ team, onEdit, onDelete }) => {
+const TeamCard: React.FC<TeamCardProps> = ({ team, onDelete }) => {
   return (
     <Grid size={{ xs: 12, md: 6 }} key={team.id}>
       <Card 
@@ -72,13 +70,6 @@ const TeamCard: React.FC<TeamCardProps> = ({ team, onEdit, onDelete }) => {
           </Grid>
         </CardContent>
         <CardActions sx={{ justifyContent: 'flex-end', p: 2 }}>
-          <IconButton 
-            size="small" 
-            onClick={() => onEdit(team.id)}
-            sx={{ color: '#3B4CCA' }}
-          >
-            <EditIcon />
-          </IconButton>
           <IconButton 
             size="small" 
             onClick={() => onDelete(team.id)}

@@ -53,10 +53,6 @@ const Dashboard: React.FC = () => {
     fetchTeams();
   };
 
-  const handleEditTeam = (teamId: string) => {
-    console.log('Edit team', teamId);
-  };
-
   const handleDeleteTeam = async (teamId: string) => {
     await deleteTeam(teamId);
     dispatch(removeTeam(teamId));
@@ -85,7 +81,6 @@ const Dashboard: React.FC = () => {
               <TeamCard 
                 key={team.id}
                 team={team}
-                onEdit={handleEditTeam}
                 onDelete={handleDeleteTeam}
               />
             ))}
