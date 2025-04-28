@@ -11,10 +11,11 @@ import { useTranslation } from 'react-i18next';
 import { RootState, useAppSelector } from '../../store/store';
 import { Team } from '../../types/teams';
 
-// Import new components
+// Import components
 import TeamHeader from '../../components/TeamDetails/TeamHeader';
 import TeamDescription from '../../components/TeamDetails/TeamDescription';
 import PokemonList from '../../components/TeamDetails/PokemonList';
+import AddPokemonModal from '../../components/TeamDetails/AddPokemonModal';
 
 const TeamDetails: React.FC = () => {
   const { teamId } = useParams<{ teamId: string }>();
@@ -57,6 +58,17 @@ const TeamDetails: React.FC = () => {
   const handlePokemonAdded = () => {
     // The team state will be updated from the parent component
     setIsAddPokemonModalOpen(false);
+    
+    // In a real implementation, you would refresh the team data here
+    // For now, we'll use the mock data update
+    if (team && teamId) {
+      // Here you would make an API call to get the updated team
+      // For example: const updatedTeam = await fetchTeam(teamId);
+      // setTeam(updatedTeam);
+      
+      // Just for demo purpose, we'll add a mock Pokémon
+      console.log('Pokémon added to team successfully!');
+    }
   };
 
   if (error || !team) {
@@ -119,7 +131,12 @@ const TeamDetails: React.FC = () => {
         />
         
         {/* Modal for adding Pokemon */}
-        
+        <AddPokemonModal
+          open={isAddPokemonModalOpen}
+          teamId={teamId || ''}
+          onClose={handleCloseAddPokemonModal}
+          onPokemonAdded={handlePokemonAdded}
+        />
       </Container>
     </Box>
   );

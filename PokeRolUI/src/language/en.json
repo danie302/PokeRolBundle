@@ -49,7 +49,8 @@
     "password-required": "Password is required",
     "password-minlength": "Password must be at least 8 characters long",
     "confirmPassword-required": "Confirm password is required",
-    "confirmPassword-match": "Passwords do not match"
+    "confirmPassword-match": "Passwords do not match",
+    "addingPokemon": "Error adding Pokemon to team..."
   },
   "team": {
     "description": "Team Description",
@@ -58,6 +59,21 @@
     "addPokemon": "Add Pokemon",
     "noTeam": "No team found",
     "addFirstPokemon": "Add your first Pokemon to your team",
-    "noPokemon": "No Pokemon found"
+    "noPokemon": "No Pokemon found",
+    "addToTeam": "Add to Team",
+    "selectDifferent": "Select different Pokemon"
+  },
+  "search": {
+    "pokemonNameOrId": "Search for a Pokemon by name or ID",
+    "noResults": "No results found",
+    "search": "Search",
+    "results": "Results",
+    "typeToSearch": "Type to search",
+    "foundCount": "Found {{count}} results",
+    "searching": "Searching..."
+  },
+  "pokemon": {
+    "normal": "Normal",
+    "shiny": "Shiny"
   }
 }
