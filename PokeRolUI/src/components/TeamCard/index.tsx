@@ -11,6 +11,7 @@ import {
   Chip
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { useNavigate } from 'react-router-dom';
 import { Pokemon } from '../../types/pokemon';
 import PokemonItem from '../PokemonItem';
 
@@ -20,6 +21,17 @@ interface TeamCardProps {
 }
 
 const TeamCard: React.FC<TeamCardProps> = ({ team, onDelete }) => {
+  const navigate = useNavigate();
+  
+  const handleCardClick = () => {
+    navigate(`/team/${team.id}`);
+  };
+  
+  const handleDeleteClick = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent navigation when clicking delete
+    onDelete(team.id);
+  };
+  
   return (
     <Grid size={{ xs: 12, md: 6 }} key={team.id}>
       <Card 
@@ -28,11 +40,13 @@ const TeamCard: React.FC<TeamCardProps> = ({ team, onDelete }) => {
           borderRadius: 2,
           boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
           transition: 'transform 0.3s ease',
+          cursor: 'pointer',
           '&:hover': {
             transform: 'translateY(-5px)',
             boxShadow: '0 6px 12px rgba(0,0,0,0.15)'
           }
         }}
+        onClick={handleCardClick}
       >
         <CardContent>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', mb: 2 }}>
@@ -61,18 +75,31 @@ const TeamCard: React.FC<TeamCardProps> = ({ team, onDelete }) => {
           </Typography>
           <Divider sx={{ mb: 2 }} />
           <Grid container spacing={1}>
-            {team.pokemons.map((pokemon: Pokemon) => (
+            {team.pokemons.slice(0, 4).map((pokemon: Pokemon) => (
               <PokemonItem 
                 key={pokemon.id} 
                 pokemon={pokemon} 
               />
             ))}
+            {team.pokemons.length > 4 && (
+              <Box sx={{ 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                width: '100%', 
+                mt: 1 
+              }}>
+                <Typography variant="body2" color="primary">
+                  +{team.pokemons.length - 4} more
+                </Typography>
+              </Box>
+            )}
           </Grid>
         </CardContent>
         <CardActions sx={{ justifyContent: 'flex-end', p: 2 }}>
           <IconButton 
             size="small" 
-            onClick={() => onDelete(team.id)}
+            onClick={handleDeleteClick}
             sx={{ color: '#CC0000' }}
           >
             <DeleteIcon />

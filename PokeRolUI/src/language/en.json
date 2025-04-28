@@ -50,5 +50,14 @@
     "password-minlength": "Password must be at least 8 characters long",
     "confirmPassword-required": "Confirm password is required",
     "confirmPassword-match": "Passwords do not match"
+  },
+  "team": {
+    "description": "Team Description",
+    "pokemon": "Pokemon",
+    "pokemons": "Pokemons",
+    "addPokemon": "Add Pokemon",
+    "noTeam": "No team found",
+    "addFirstPokemon": "Add your first Pokemon to your team",
+    "noPokemon": "No Pokemon found"
   }
 }

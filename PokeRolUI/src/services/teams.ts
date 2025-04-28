@@ -18,7 +18,6 @@ export const fetchUserTeams = async (userId: string) => {
       description: team.description,
       pokemons: team.pokemons
     }));
-    console.log('teams', teams);
     return teams;
   } catch (error) {
     console.error('Error fetching teams:', error);
