@@ -3,8 +3,15 @@ import { Box, Container } from '@mui/material';
 import HeroSection from '../../components/HeroSection';
 import FeaturesSection from '../../components/FeaturesSection';
 import CallToAction from '../../components/CallToAction';
+import { Navigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
+  // Verify if user is logged in with jwt token
+  const token = localStorage.getItem('token');
+  if (token) {
+    return <Navigate to="/dashboard" />;
+  }
+  
   return (
     <Box sx={{
       minHeight: '100vh',
