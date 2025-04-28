@@ -95,10 +95,10 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => 
         </Box>
       ) : (
         <Box sx={{ p: 3 }}>
-          <Grid container spacing={2}>
-            {pokemons.slice(0, isMobile ? 4 : 6).map((pokemon: Pokemon) => (
+          <Grid container spacing={2} columns={12}>
+            {pokemons.map((pokemon: Pokemon) => (
+              <Grid size={{sm: 6, md: 3, lg: 2}} key={pokemon.id}>
                 <Box sx={{
-                  key: pokemon.id,
                   p: 2,
                   margin: 'auto',
                   borderRadius: 2,
@@ -110,25 +110,9 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => 
                 }}>
                   <PokemonItem pokemon={pokemon} />
                 </Box>
+              </Grid>
             ))}
           </Grid>
-          {pokemons.length > (isMobile ? 4 : 6) && (
-            <Grid size={2}>
-              <Box sx={{
-                p: 2,
-                borderRadius: 2,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '100%',
-                mt: 1
-              }}>
-                <Typography variant="body2" color="primary">
-                  +{pokemons.length - (isMobile ? 4 : 6)} more
-                </Typography>
-              </Box>
-            </Grid>
-          )}
         </Box>
       )}
     </Paper>
