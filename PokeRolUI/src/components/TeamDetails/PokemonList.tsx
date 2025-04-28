@@ -5,8 +5,7 @@ import {
   Box,
   Grid,
   Button,
-  Divider,
-  useMediaQuery
+  Divider
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
@@ -21,7 +20,6 @@ interface PokemonListProps {
 
 const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => {
   const { t } = useTranslation();
-  const isMobile = useMediaQuery('(max-width: 600px)');
 
   return (
     <Paper
