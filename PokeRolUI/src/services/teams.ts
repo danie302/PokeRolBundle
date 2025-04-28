@@ -37,12 +37,19 @@ export const createTeam = async (teamData: Team) => {
   };
 
   try {
-    const response = await axios.post('/team/create', teamRequest, {
+    const response = await axios.post('/team', teamRequest, {
       headers: {
         Authorization: `Bearer ${token}`
       }
     });
-    return response;
+    const team = {
+      id: response.data._id,
+      name: response.data.name,
+      description: response.data.description,
+      owner: response.data.owner,
+      pokemons: response.data.pokemons
+    };
+    return team;
   } catch (error) {
     console.error('Error creating team:', error);
     throw error;

@@ -7,6 +7,9 @@ interface PokemonItemProps {
 }
 
 const PokemonItem: React.FC<PokemonItemProps> = ({ pokemon }) => {
+  // Generate image URL based on pokeApiId
+  const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.isShiny ? 'shiny/' : ''}${pokemon.pokeApiId}.png`;
+  
   return (
     <Grid size={3} key={pokemon.id}>
       <Box
@@ -24,7 +27,7 @@ const PokemonItem: React.FC<PokemonItemProps> = ({ pokemon }) => {
             objectFit: 'contain',
             mb: 1
           }}
-          image={'pokemon.image'}
+          image={imageUrl}
           alt={pokemon.name}
         />
         <Typography variant="caption" align="center">
