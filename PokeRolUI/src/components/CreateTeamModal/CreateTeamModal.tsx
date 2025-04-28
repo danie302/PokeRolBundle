@@ -9,10 +9,8 @@ import {
   Box,
   Typography
 } from '@mui/material';
-import { PokemonSelector } from './PokemonSelector';
 import { RootState, useAppSelector } from '../../store/store';
 import { createTeam } from '../../services/teams';
-import { Pokemon } from '../../types/pokemon';
 
 export interface CreateTeamModalProps {
   open: boolean;
@@ -23,18 +21,7 @@ export interface CreateTeamModalProps {
 export function CreateTeamModal({ open, onClose, onTeamCreated }: CreateTeamModalProps) {
   const [teamName, setTeamName] = useState('');
   const [teamDescription, setTeamDescription] = useState('');
-  const [selectedPokemons, setSelectedPokemons] = useState<Pokemon[]>([]);
   const user = useAppSelector((state: RootState) => state.user);
-  
-  const handleAddPokemon = (pokemon: Pokemon) => {
-    if (selectedPokemons.length < 6 && !selectedPokemons.some(p => p.id === pokemon.id)) {
-      setSelectedPokemons([...selectedPokemons, pokemon]);
-    }
-  };
-
-  const handleRemovePokemon = (pokemonId: string) => {
-    setSelectedPokemons(selectedPokemons.filter(p => p.id !== pokemonId));
-  };
 
   const handleCreateTeam = async () => {
     // Validation
@@ -49,7 +36,7 @@ export function CreateTeamModal({ open, onClose, onTeamCreated }: CreateTeamModa
         owner: user.id,
         name: teamName,
         description: teamDescription,
-        pokemons: selectedPokemons.map((pokemon: Pokemon) => pokemon.id)
+        pokemons: []
       };
 
       await createTeam(team);
@@ -60,7 +47,6 @@ export function CreateTeamModal({ open, onClose, onTeamCreated }: CreateTeamModa
       // Reset state
       setTeamName('');
       setTeamDescription('');
-      setSelectedPokemons([]);
 
       // Close modal
       onClose();
@@ -108,11 +94,6 @@ export function CreateTeamModal({ open, onClose, onTeamCreated }: CreateTeamModa
           />
         </Box>
         
-        <PokemonSelector
-          selectedPokemons={selectedPokemons}
-          onAddPokemon={handleAddPokemon}
-          onRemovePokemon={handleRemovePokemon}
-        />
       </DialogContent>
       
       <DialogActions sx={{ p: 2 }}>
