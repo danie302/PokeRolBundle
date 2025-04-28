@@ -1,16 +1,9 @@
-import React from 'react';
-
-export interface SimplePokemon {
-  id: string;
-  name: string;
-  imageUrl: string;
-  type: string;
-}
+import { Pokemon } from '../../types/pokemon';
 
 export interface Team {
   id: string;
   name: string;
-  pokemons: SimplePokemon[];
+  pokemons: Pokemon[];
 }
 
 export interface CreateTeamModalProps {
@@ -20,12 +13,12 @@ export interface CreateTeamModalProps {
 }
 
 export interface PokemonSelectorProps {
-  selectedPokemons: SimplePokemon[];
-  onAddPokemon: (pokemon: SimplePokemon) => void;
+  selectedPokemons: Pokemon[];
+  onAddPokemon: (pokemon: Pokemon) => void;
   onRemovePokemon: (pokemonId: string) => void;
 }
 
 export interface SelectedPokemonListProps {
-  pokemons: SimplePokemon[];
+  pokemons: Pokemon[];
   onRemove: (pokemonId: string) => void;
 } 

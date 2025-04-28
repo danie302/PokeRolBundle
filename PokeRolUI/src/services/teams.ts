@@ -27,17 +27,11 @@ export const fetchUserTeams = async (userId: string) => {
 };
 
 // Function to create a new team
-export const createTeam = async (teamData: Team) => {
+export const createTeam = async (teamData: TeamRequest) => {
   const token = localStorage.getItem('token');
-  const teamRequest: TeamRequest = {
-    owner: teamData.owner,
-    name: teamData.name,
-    description: teamData.description,
-    pokemons: teamData.pokemons.map((pokemon: Pokemon) => pokemon.id)
-  };
 
   try {
-    const response = await axios.post('/team', teamRequest, {
+    const response = await axios.post('/team', teamData, {
       headers: {
         Authorization: `Bearer ${token}`
       }

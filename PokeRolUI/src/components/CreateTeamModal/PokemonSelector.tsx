@@ -1,13 +1,97 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box, Typography } from '@mui/material';
-import { PokemonSelectorProps, SimplePokemon, SelectedPokemonListProps } from './types';
+import { PokemonSelectorProps, SelectedPokemonListProps } from './types';
+import { Pokemon } from '../../types/pokemon';
+import { getPokemonImageUrl } from '../../utils/utils';
 
 // Mock data for Pokemon search - this would be replaced with actual API calls
-const mockPokemons: SimplePokemon[] = [
-  { id: '1', name: 'Bulbasaur', imageUrl: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/001.png', type: 'Grass' },
-  { id: '4', name: 'Charmander', imageUrl: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png', type: 'Fire' },
-  { id: '7', name: 'Squirtle', imageUrl: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/007.png', type: 'Water' },
-  { id: '25', name: 'Pikachu', imageUrl: 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/025.png', type: 'Electric' },
+const mockPokemons: Pokemon[] = [
+  {
+    id: '1',
+    pokeApiId: '1',
+    userId: '1',
+    name: 'Bulbasaur',
+    type: ['Grass', 'Poison'],
+    level: 1,
+    experience: 0,
+    nature: 'Hardy',
+    ability: {
+      name: 'Overgrow',
+      description: 'When this Pokémon has just one or two types, it has a 10% chance to change its type to the other type of the same Pokémon species.'
+    },
+    weight: 69,
+    height: 7,
+    stats: {
+      hp: 45,
+      attack: 49,
+      defense: 49,
+      specialAttack: 65,
+      specialDefense: 65,
+      speed: 45
+    },
+    ivs: {
+      hp: 30,
+      attack: 30,
+      defense: 30,
+      specialAttack: 30,
+      specialDefense: 30,
+      speed: 30
+    },
+    evs: {
+      hp: 30,
+      attack: 30,
+      defense: 30,
+      specialAttack: 30,
+      specialDefense: 30,
+      speed: 30
+    },
+    moves: [],
+    description: 'Bulbasaur is a small, quadrupedal Pokémon that has blue-green skin with a cream-colored underside. It has large, dark green eyes and a wide, friendly smile. Its ears are short and rounded, and it has a small, pointed snout. Bulbasaur has a pair of small, sharp claws on its forepaws and a pair of large, sharp claws on its hindpaws.',
+    isShiny: false
+  },
+  {
+    id: '2',
+    pokeApiId: '2',
+    userId: '1',
+    name: 'Ivysaur',
+    type: ['Grass', 'Poison'],
+    level: 1,
+    experience: 0,
+    nature: 'Hardy',
+    ability: {
+      name: 'Overgrow',
+      description: 'When this Pokémon has just one or two types, it has a 10% chance to change its type to the other type of the same Pokémon species.'
+    },
+    weight: 130,
+    height: 10,
+    stats: {
+      hp: 60,
+      attack: 62,
+      defense: 63, 
+      specialAttack: 80,
+      specialDefense: 80,
+      speed: 60
+    },
+    ivs: {
+      hp: 30,
+      attack: 30,
+      defense: 30,
+      specialAttack: 30,
+      specialDefense: 30,
+      speed: 30
+    },
+    evs: {
+      hp: 30,
+      attack: 30,
+      defense: 30,
+      specialAttack: 30,
+      specialDefense: 30,
+      speed: 30
+    },
+    moves: [],
+    description: 'Ivysaur is a larger, more muscular version of Bulbasaur. It has a more pronounced jawline and a more pronounced chest. Its ears are longer and more pointed, and it has a more pronounced snout. Ivysaur has a pair of small, sharp claws on its forepaws and a pair of large, sharp claws on its hindpaws.',
+    isShiny: false
+  }
 ];
 
 // Component for displaying selected pokemons
@@ -45,9 +129,9 @@ function SelectedPokemonList({ pokemons, onRemove }: SelectedPokemonListProps) {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            {pokemon.imageUrl && (
+            {pokemon.pokeApiId && (
               <img 
-                src={pokemon.imageUrl} 
+                src={getPokemonImageUrl(pokemon.pokeApiId)} 
                 alt={pokemon.name} 
                 style={{ width: 35, height: 35, objectFit: 'contain' }}
               />
@@ -78,7 +162,7 @@ export function PokemonSelector({
   onRemovePokemon 
 }: PokemonSelectorProps) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState<SimplePokemon[]>([]);
+  const [searchResults, setSearchResults] = useState<Pokemon[]>([]);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const term = event.target.value;
@@ -138,8 +222,8 @@ export function PokemonSelector({
                   }}
                 >
                   <Box sx={{ 
-                    width: 32, 
-                    height: 32, 
+                    width: 60, 
+                    height: 60, 
                     mr: 1, 
                     bgcolor: 'grey.100', 
                     borderRadius: '50%',
@@ -147,11 +231,11 @@ export function PokemonSelector({
                     alignItems: 'center',
                     justifyContent: 'center'
                   }}>
-                    {pokemon.imageUrl && (
+                    {pokemon.pokeApiId && (
                       <img 
-                        src={pokemon.imageUrl} 
+                        src={getPokemonImageUrl(pokemon.pokeApiId)} 
                         alt={pokemon.name} 
-                        style={{ width: 24, height: 24, objectFit: 'contain' }}
+                        style={{ width: 50, height: 50, objectFit: 'contain' }}
                       />
                     )}
                   </Box>

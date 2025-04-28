@@ -9,21 +9,24 @@ import {
   Box,
   Typography
 } from '@mui/material';
-import { SimplePokemon } from './types';
 import { PokemonSelector } from './PokemonSelector';
+import { RootState, useAppSelector } from '../../store/store';
+import { createTeam } from '../../services/teams';
+import { Pokemon } from '../../types/pokemon';
 
 export interface CreateTeamModalProps {
   open: boolean;
   onClose: () => void;
-  onTeamCreated: (team: { name: string, description: string, pokemons: SimplePokemon[] }) => void;
+  onTeamCreated: () => void;
 }
 
 export function CreateTeamModal({ open, onClose, onTeamCreated }: CreateTeamModalProps) {
   const [teamName, setTeamName] = useState('');
   const [teamDescription, setTeamDescription] = useState('');
-  const [selectedPokemons, setSelectedPokemons] = useState<SimplePokemon[]>([]);
+  const [selectedPokemons, setSelectedPokemons] = useState<Pokemon[]>([]);
+  const user = useAppSelector((state: RootState) => state.user);
   
-  const handleAddPokemon = (pokemon: SimplePokemon) => {
+  const handleAddPokemon = (pokemon: Pokemon) => {
     if (selectedPokemons.length < 6 && !selectedPokemons.some(p => p.id === pokemon.id)) {
       setSelectedPokemons([...selectedPokemons, pokemon]);
     }
@@ -40,24 +43,25 @@ export function CreateTeamModal({ open, onClose, onTeamCreated }: CreateTeamModa
       return;
     }
     
-    if (selectedPokemons.length === 0) {
-      alert('Please select at least one Pokémon');
-      return;
-    }
-    
     try {
+      // Create team
+      const team = {
+        owner: user.id,
+        name: teamName,
+        description: teamDescription,
+        pokemons: selectedPokemons.map((pokemon: Pokemon) => pokemon.id)
+      };
+
+      await createTeam(team);
+      
+      // Notify parent component
+      onTeamCreated();
+      
       // Reset state
       setTeamName('');
       setTeamDescription('');
       setSelectedPokemons([]);
-      
-      // Notify parent component
-      onTeamCreated({
-        name: teamName,
-        description: teamDescription,
-        pokemons: selectedPokemons
-      });
-      
+
       // Close modal
       onClose();
     } catch (error) {
