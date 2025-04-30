@@ -1,5 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
-import PokemonImage from "../../components/PokemonImage";
+import { Box, Container, Paper, Typography } from "@mui/material";
 import { useParams } from "react-router";
 import { RootState } from "../../store/store";
 import { useAppSelector } from "../../store/store";
@@ -8,8 +7,35 @@ import { useAppDispatch } from "../../store/store";
 import { fetchUserTeams } from "../../services/teams";
 import { setTeams } from "../../store/teams/teams";
 import { selectedPokemon } from "../../store/pokemons/pokemon";
-import { Pokemon } from "../../types/pokemon";
+import { Move, Pokemon } from "../../types/pokemon";
 import { Team } from "../../types/teams";
+import PokemonDetailsHeader from "../../components/PokemonDetailsHeader";
+import LifePoints from "../../components/LifePoints";
+import PokemonStats from "../../components/PokemonStats";
+import PokemonAbility from "../../components/PokemonAbility";
+import PokemonMoves from "../../components/PokemonMoves";
+import PokemonNotes from "../../components/PokemonNotes";
+
+const mockMoves: Move[] = [
+    {
+        name: "Tackle",
+        type: "normal",
+        power: 40,
+        accuracy: 100,
+    },
+    {
+        name: "Fire Fang",
+        type: "fire",   
+        power: 65,
+        accuracy: 95,
+    },
+    {
+        name: "Thunderbolt",
+        type: "electric",
+        power: 90,
+        accuracy: 100,
+    }  
+];
 
 const PokemonDetails = () => {
     const { pokemonId, teamId } = useParams();
@@ -38,19 +64,21 @@ const PokemonDetails = () => {
         }}>
             <Container>
                 {/* Pokemon Header */}
-                {/* baackground color is a gradient from #based on the pokemon type      */}
-                <Box sx={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    background: `linear-gradient(135deg, ${pokemon.type.map((type) => `#${type} 0%, #${type} 100%`).join(', ')}`,
-                    borderRadius: 2, padding: 2
-                }}>
-                    <PokemonImage {...pokemon} />
-                    <Typography variant="h4">{pokemon.name}</Typography>
-                </Box>
-
+                <PokemonDetailsHeader pokemon={pokemon} />
+                {/* Life Points */}
+                <LifePoints maxLifePoints={pokemon.stats.hp} />
+                {/* Stats */}
+                <PokemonStats pokemon={pokemon} />
+                {/* Ability */}
+                <PokemonAbility 
+                    name={pokemon.ability.name} 
+                    description={pokemon.ability.description} 
+                    type={pokemon.type[0]} 
+                />
+                {/* Moves */}
+                <PokemonMoves moves={mockMoves} />
+                {/* Notes */}
+                <PokemonNotes notes={pokemon.description} />
             </Container>
         </Box>
     );

@@ -93,6 +93,7 @@
     "experience": "Experience",
     "nature": "Nature",
     "description": "Description",
-    "notFound": "Not Found"
+    "notFound": "Not Found",
+    "loadingAbilities": "Loading abilities..."
   }
 }

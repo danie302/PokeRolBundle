@@ -28,6 +28,7 @@ import AbilitySelector from './AddPokemonModal/AbilitySelector';
 import { createPokemon } from '../../services/pokemon';
 import { updateTeam } from '../../services/teams';
 import { setTeams } from '../../store/teams/teams';
+import { getBackgroundGradient } from '../../utils/utils';
 
 interface Ability {
   name: string;
@@ -196,19 +197,6 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
       console.error('Error adding Pokémon to team:', err);
       setError(t('team.errorAddingPokemon'));
     }
-  };
-
-  // Obtener color de fondo basado en el tipo principal del Pokémon
-  const getBackgroundGradient = (pokemon: PokemonSearchResult) => {
-    if (!pokemon || !pokemon.types || pokemon.types.length === 0) return '';
-    
-    const primaryType = pokemon.types[0].type.name;
-    const secondaryType = pokemon.types.length > 1 ? pokemon.types[1].type.name : primaryType;
-    
-    const color1 = typeColors[primaryType] || '#3B4CCA';
-    const color2 = typeColors[secondaryType] || '#3B4CCA';
-    
-    return `linear-gradient(135deg, ${color1} 0%, ${color2} 100%)`;
   };
 
   return (

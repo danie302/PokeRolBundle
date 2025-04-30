@@ -7,10 +7,8 @@ import {
   FormControlLabel, 
   Radio, 
   Paper,
-  Tooltip,
   CircularProgress
 } from '@mui/material';
-import InfoIcon from '@mui/icons-material/Info';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 

@@ -13,6 +13,8 @@ import { useTranslation } from 'react-i18next';
 import { Pokemon } from '../../types/pokemon';
 import PokemonItem from '../PokemonItem';
 import { useNavigate, useParams } from 'react-router-dom';
+import { selectedPokemon } from '../../store/pokemons/pokemon';
+import { useAppDispatch } from '../../store/store';
 
 interface PokemonListProps {
   pokemons: Pokemon[];
@@ -23,6 +25,11 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => 
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { teamId } = useParams();
+  const dispatch = useAppDispatch();
+  const navigateToPokemonDetails = (pokemon: Pokemon) => {
+    dispatch(selectedPokemon(pokemon));
+    navigate(`/team/${teamId}/${pokemon.id}`);
+  };
 
   return (
     <Paper
@@ -100,7 +107,7 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => 
             {pokemons.map((pokemon: Pokemon) => (
               <Grid size={{ sm: 6, md: 3, lg: 2 }} key={pokemon.id}>
                 <Box
-                  onClick={() => navigate(`/team/${teamId}/${pokemon.id}`)}
+                  onClick={() =>navigateToPokemonDetails(pokemon)}
                   sx={{
                     p: 2,
                     margin: 'auto',

@@ -1,5 +1,3 @@
-import { Pokemon } from '../../../types/pokemon';
-
 export interface PokemonSearchResult {
   id: number;
   name: string;
