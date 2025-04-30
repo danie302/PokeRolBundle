@@ -5,6 +5,8 @@ import { Button, IconButton, Drawer, List, ListItem, ListItemText } from "@mui/m
 import { Link as RouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
+import { useAppSelector } from "../../store/store";
+import { RootState } from "../../store/store";
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -12,12 +14,12 @@ const Navbar = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-
+  const user = useAppSelector((state: RootState) => state.user);
+  
   useEffect(() => {
     // Check if user is logged in
-    const token = localStorage.getItem('token');
-    setIsLoggedIn(!!token);
-  }, []);
+    setIsLoggedIn(!!user.id);
+  }, [user]);
 
   const toggleDrawer = () => {
     setDrawerOpen(!drawerOpen);

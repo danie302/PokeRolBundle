@@ -12,6 +12,7 @@ import CatchingPokemonIcon from '@mui/icons-material/CatchingPokemon';
 import { useTranslation } from 'react-i18next';
 import { Pokemon } from '../../types/pokemon';
 import PokemonItem from '../PokemonItem';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface PokemonListProps {
   pokemons: Pokemon[];
@@ -20,6 +21,8 @@ interface PokemonListProps {
 
 const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { teamId } = useParams();
 
   return (
     <Paper
@@ -95,17 +98,19 @@ const PokemonList: React.FC<PokemonListProps> = ({ pokemons, onAddPokemon }) => 
         <Box sx={{ p: 3 }}>
           <Grid container spacing={2} columns={12}>
             {pokemons.map((pokemon: Pokemon) => (
-              <Grid size={{sm: 6, md: 3, lg: 2}} key={pokemon.id}>
-                <Box sx={{
-                  p: 2,
-                  margin: 'auto',
-                  borderRadius: 2,
-                  transition: '0.3s all',
-                  '&:hover': {
-                    bgcolor: 'rgba(59, 76, 202, 0.05)',
-                    transform: 'translateY(-5px)'
-                  }
-                }}>
+              <Grid size={{ sm: 6, md: 3, lg: 2 }} key={pokemon.id}>
+                <Box
+                  onClick={() => navigate(`/team/${teamId}/${pokemon.id}`)}
+                  sx={{
+                    p: 2,
+                    margin: 'auto',
+                    borderRadius: 2,
+                    transition: '0.3s all',
+                    '&:hover': {
+                      bgcolor: 'rgba(59, 76, 202, 0.05)',
+                      transform: 'translateY(-5px)'
+                    }
+                  }}>
                   <PokemonItem pokemon={pokemon} />
                 </Box>
               </Grid>

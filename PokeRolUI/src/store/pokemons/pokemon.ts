@@ -26,11 +26,11 @@ export const pokemonSlice = createSlice({
     name: 'pokemon',
     initialState,
     reducers: {
-        selectedPokemon: (state, action) => {
-            state = action.payload;
+        selectedPokemon: (_state, action) => {
+            return action.payload;
         },
-        clearSelectedPokemon: (state) => {
-            state = initialState;
+        clearSelectedPokemon: () => {
+            return initialState;
         },
     },
 })

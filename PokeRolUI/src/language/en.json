@@ -3,6 +3,11 @@
   "home": "Home",
   "login": "Login",
   "register": "Register",
+  "common": {
+    "cancel": "Cancel",
+    "save": "Save",
+    "back": "Back"
+  },
   "homepage": {
     "title": "Welcome to PokéRol",
     "description": "Your ultimate Pokémon role-playing companion",
@@ -79,6 +84,15 @@
     "appearance": "Appearance",
     "abilities": "Abilities",
     "selectAbility": "Select Ability",
-    "hiddenAbility": "Hidden Ability"
+    "hiddenAbility": "Hidden Ability",
+    "stats": "Stats",
+    "statusConditions": "Status Conditions",
+    "basic": "Basic Info", 
+    "edit": "Edit",
+    "level": "Level", 
+    "experience": "Experience",
+    "nature": "Nature",
+    "description": "Description",
+    "notFound": "Not Found"
   }
 }

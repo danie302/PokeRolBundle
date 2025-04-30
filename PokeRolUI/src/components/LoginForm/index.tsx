@@ -11,13 +11,16 @@ import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { LoginUserData, LoginValidationErrors } from '../../types/forms';
 import { loginValidator } from '../../utils/formValidator';
-import { loginUser } from '../../services/auth';
+import { getUser, loginUser } from '../../services/auth';
+import { setUser } from '../../store/users/user';
+import { useAppDispatch } from '../../store/store';
 
 const LoginForm: React.FC = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [validationErrors, setValidationErrors] = useState<LoginValidationErrors>({});
+  const dispatch = useAppDispatch();
   
   const handleTogglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -39,7 +42,8 @@ const LoginForm: React.FC = () => {
 
     const response = await loginUser(loginUserData);
     if (response.status === 200) {
-      localStorage.setItem('token', response.data.token);
+      const user = await getUser();
+      dispatch(setUser(user));
       navigate('/dashboard');
     } else {
       setValidationErrors({

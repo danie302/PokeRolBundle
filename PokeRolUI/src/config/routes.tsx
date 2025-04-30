@@ -3,7 +3,7 @@ import Home from "../pages/Home/";
 import Register from "../pages/Register/";
 import Dashboard from "../pages/Dashboard/";
 import TeamDetails from "../pages/TeamDetails/";
-
+import PokemonDetails from "../pages/PokemonDetails/";
 export const routes = [
   {
     path: "/",
@@ -29,5 +29,10 @@ export const routes = [
     path: "/team/:teamId",
     private: true,
     element: <TeamDetails />,
+  },
+  {
+    path: "/team/:teamId/:pokemonId",
+    private: true,
+    element: <PokemonDetails />,
   },
 ];

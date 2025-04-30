@@ -4,15 +4,10 @@ import { Pokemon } from '../types/pokemon';
 import { getPokemonById } from './pokemon';
 
 // Function to fetch user teams
-export const fetchUserTeams = async (userId: string) => {
-  const token = localStorage.getItem('token');
+export const fetchUserTeams = async (userId: string): Promise<Team[]> => {
   
   try {
-    const response = await axios.get(`/team/user/${userId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    const response = await axios.get(`/team/user/${userId}`);
     
     // Map teams and resolve all Pokemon data
     const teams = await Promise.all(
@@ -46,14 +41,9 @@ export const fetchUserTeams = async (userId: string) => {
 
 // Function to create a new team
 export const createTeam = async (teamData: TeamRequest) => {
-  const token = localStorage.getItem('token');
 
   try {
-    const response = await axios.post('/team', teamData, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    const response = await axios.post('/team', teamData);
     const team = {
       id: response.data._id,
       name: response.data.name,
@@ -70,7 +60,6 @@ export const createTeam = async (teamData: TeamRequest) => {
 
 // Function to update an existing team
 export const updateTeam = async (teamId: string, teamData: Team) => {
-  const token = localStorage.getItem('token');
   console.log('TEAM DATA', teamData);
 
   const teamRequest: TeamRequest = {
@@ -81,11 +70,7 @@ export const updateTeam = async (teamId: string, teamData: Team) => {
   };
   
   try {
-    const response = await axios.put(`/team/${teamId}`, teamRequest, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    const response = await axios.put(`/team/${teamId}`, teamRequest);
     return response;
   } catch (error) {
     console.error('Error updating team:', error);
@@ -95,14 +80,8 @@ export const updateTeam = async (teamId: string, teamData: Team) => {
 
 // Function to delete a team
 export const deleteTeam = async (teamId: string) => {
-  const token = localStorage.getItem('token');
-  
   try {
-    const response = await axios.delete(`/team/${teamId}`, {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    });
+    const response = await axios.delete(`/team/${teamId}`);
     return response;
   } catch (error) {
     console.error('Error deleting team:', error);

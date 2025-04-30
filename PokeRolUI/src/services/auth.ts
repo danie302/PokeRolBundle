@@ -15,16 +15,13 @@ export const registerNewUser = async (userData: RegisterUserData) => {
 
 export const loginUser = async (userData: LoginUserData) => {
     const response = await axios.post('/auth/login', userData);
+    localStorage.setItem('token', response.data.token);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${response.data.token}`;
     return response;
 };
 
 export const getUser = async () => {
-    const token = localStorage.getItem('token');
-    const { data } = await axios.get('/users/me', {
-        headers: {
-            Authorization: `Bearer ${token}`
-        }
-    });
+    const { data } = await axios.get('/users/me');
     const user = {
         id: data._id,
         username: data.username,

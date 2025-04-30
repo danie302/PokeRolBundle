@@ -38,7 +38,7 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     fetchTeams();
-  }, [user, dispatch]);
+  }, [user]);
 
   const handleCreateTeam = () => {
     setIsCreateModalOpen(true);

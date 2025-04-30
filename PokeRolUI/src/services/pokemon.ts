@@ -14,13 +14,8 @@ export const getAllPokemon = async (): Promise<{ name: string; url: string }[]> 
 }
 
 export const createPokemon = async (pokemon: Omit<Pokemon, 'id'>) => {
-    const token = localStorage.getItem('token');
     try {
-        const { data } = await axios.post('/pokemon', pokemon, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        const { data } = await axios.post('/pokemon', pokemon);
         const createdPokemon = {
             id: data._id,
             ...data
@@ -33,13 +28,8 @@ export const createPokemon = async (pokemon: Omit<Pokemon, 'id'>) => {
 }
 
 export const getPokemonById = async (id: string) => {
-    const token = localStorage.getItem('token');
     try {
-        const { data } = await axios.get(`/pokemon/${id}`, {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        })
+        const { data } = await axios.get(`/pokemon/${id}`);
         return data;
     } catch (error) {
         console.error('Error fetching Pokémon by ID:', error)
