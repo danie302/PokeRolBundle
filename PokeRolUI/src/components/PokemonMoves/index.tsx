@@ -100,7 +100,7 @@ const PokemonMoves = ({ moves }: PokemonMovesProps) => {
                                             }}
                                         >
                                             {move.type}
-                                        </Box>s
+                                        </Box>
                                     </TableCell>
                                     <TableCell>{move.power || '-'}</TableCell>
                                     <TableCell>{move.accuracy || '-'}</TableCell>

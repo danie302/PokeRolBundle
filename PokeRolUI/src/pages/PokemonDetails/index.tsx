@@ -1,4 +1,4 @@
-import { Box, Container, Paper, Typography } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import { useParams } from "react-router";
 import { RootState } from "../../store/store";
 import { useAppSelector } from "../../store/store";
