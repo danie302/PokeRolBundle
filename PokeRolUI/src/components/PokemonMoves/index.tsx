@@ -7,6 +7,10 @@ interface PokemonMovesProps {
     moves: Move[];
 }
 
+const movePower = (power: number) => {
+    return Math.ceil(power / 25);
+}
+
 const PokemonMoves = ({ moves }: PokemonMovesProps) => {
     return (
         <Paper
@@ -80,7 +84,7 @@ const PokemonMoves = ({ moves }: PokemonMovesProps) => {
                                     }}
                                 >
                                     <TableCell sx={{ textTransform: 'capitalize' }}>
-                                        {capitalizeFirstLetter(move.name)}
+                                        {capitalizeFirstLetter(move.name.replace(/-/g, ' '))}
                                     </TableCell>
                                     <TableCell>
                                         <Box
@@ -102,7 +106,7 @@ const PokemonMoves = ({ moves }: PokemonMovesProps) => {
                                             {move.type}
                                         </Box>
                                     </TableCell>
-                                    <TableCell>{move.power || '-'}</TableCell>
+                                    <TableCell>{movePower(move.power) || '-'}</TableCell>
                                     <TableCell>{move.accuracy || '-'}</TableCell>
                                 </TableRow>
                             ))}
