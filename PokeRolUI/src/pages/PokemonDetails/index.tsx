@@ -7,7 +7,7 @@ import { useAppDispatch } from "../../store/store";
 import { fetchUserTeams } from "../../services/teams";
 import { setTeams } from "../../store/teams/teams";
 import { selectedPokemon } from "../../store/pokemons/pokemon";
-import { Move, Pokemon } from "../../types/pokemon";
+import { Pokemon } from "../../types/pokemon";
 import { Team } from "../../types/teams";
 import PokemonDetailsHeader from "../../components/PokemonDetailsHeader";
 import LifePoints from "../../components/LifePoints";
