@@ -38,5 +38,24 @@ router.post('/', verifyToken, async (req: Request<{}, {}, IPokemon>, res: Respon
     }
 });
 
+// Update a pokemon
+router.put('/:id', verifyToken, async (req: Request<{ id: string }, {}, IPokemon>, res: Response<IPokemon | ErrorResponse>) => {
+    const pokemon = await Pokemon.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if(!pokemon) {
+        res.status(404).json({ message: 'Pokemon not found' });
+        return;
+    }
+    res.json(pokemon);
+});
+
+// Delete a pokemon by ID
+router.delete('/:id', verifyToken, async (req: Request<{ id: string }>, res: Response<IPokemon | ErrorResponse>) => {
+    const pokemon = await Pokemon.findByIdAndDelete(req.params.id);
+    if(!pokemon) {
+        res.status(404).json({ message: 'Pokemon not found' });
+        return;
+    }
+    res.json(pokemon);
+});
 
 export default router;

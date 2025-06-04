@@ -2,7 +2,7 @@ import { Box, Container } from "@mui/material";
 import { useParams } from "react-router";
 import { RootState } from "../../store/store";
 import { useAppSelector } from "../../store/store";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../store/store";
 import { fetchUserTeams } from "../../services/teams";
 import { setTeams } from "../../store/teams/teams";
@@ -15,6 +15,9 @@ import PokemonStats from "../../components/PokemonStats";
 import PokemonAbility from "../../components/PokemonAbility";
 import PokemonMoves from "../../components/PokemonMoves";
 import PokemonNotes from "../../components/PokemonNotes";
+import EditPokemonModal from "../../components/EditPokemonModal";
+import { updatePokemon } from "../../services/pokemon";
+import { usePokemonStats } from "../../utils/pokemonUtils";
 
 const PokemonDetails = () => {
     const { pokemonId, teamId } = useParams();
@@ -22,6 +25,8 @@ const PokemonDetails = () => {
     const pokemon = useAppSelector((state: RootState) => state.pokemon);
     const team = useAppSelector((state: RootState) => state.teams.teams.find((team) => team.id === teamId));
     const dispatch = useAppDispatch();
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+    const { customStats } = usePokemonStats({ stats: pokemon.stats, level: pokemon.level, evs: pokemon.evs, ivs: pokemon.ivs });
 
     const loadTeam = async () => {
         if (!team) {
@@ -32,9 +37,24 @@ const PokemonDetails = () => {
         }
     };
 
+    const handleEdit = () => {
+        setIsEditModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsEditModalOpen(false);
+    };
+
+    const handleSavePokemon = (updatedPokemon: Pokemon) => {
+        // TODO: Implement the API call to update the pokemon
+        updatePokemon(pokemon.id, updatedPokemon);
+        dispatch(selectedPokemon(updatedPokemon));
+    };
+
     useEffect(() => {
         loadTeam();
     }, [user]);
+
     return (
         <Box sx={{
             minHeight: '100vh',
@@ -43,9 +63,9 @@ const PokemonDetails = () => {
         }}>
             <Container>
                 {/* Pokemon Header */}
-                <PokemonDetailsHeader pokemon={pokemon} />
+                <PokemonDetailsHeader pokemon={pokemon} onEdit={handleEdit} />
                 {/* Life Points */}
-                <LifePoints maxLifePoints={pokemon.stats.hp} />
+                <LifePoints maxLifePoints={customStats.hp} />
                 {/* Stats */}
                 <PokemonStats pokemon={pokemon} />
                 {/* Ability */}
@@ -59,6 +79,13 @@ const PokemonDetails = () => {
                 {/* Notes */}
                 <PokemonNotes notes={pokemon.description} />
             </Container>
+
+            <EditPokemonModal
+                open={isEditModalOpen}
+                onClose={handleCloseModal}
+                pokemon={pokemon}
+                onSave={handleSavePokemon}
+            />
         </Box>
     );
 };

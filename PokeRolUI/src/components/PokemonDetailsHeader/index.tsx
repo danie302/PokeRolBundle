@@ -1,15 +1,17 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, IconButton } from "@mui/material";
 import { getBackgroundGradient, capitalizeFirstLetter } from "../../utils/utils";
 import { Pokemon } from "../../types/pokemon";
 import PokemonImage from "../PokemonImage";
 import { typeColors } from "../TeamDetails/constants/typeColors";
 import StarIcon from '@mui/icons-material/Star';
+import EditIcon from '@mui/icons-material/Edit';
 
 interface PokemonDetailsHeaderProps {
     pokemon: Pokemon;
+    onEdit?: () => void;
 }
 
-const PokemonDetailsHeader = ({ pokemon }: PokemonDetailsHeaderProps) => {
+const PokemonDetailsHeader = ({ pokemon, onEdit }: PokemonDetailsHeaderProps) => {
     if (!pokemon.name) {
         return null;
     }
@@ -29,6 +31,19 @@ const PokemonDetailsHeader = ({ pokemon }: PokemonDetailsHeaderProps) => {
             position: 'relative',
             boxShadow: 3,
         }}>
+            <IconButton 
+                onClick={onEdit}
+                sx={{
+                    position: 'absolute',
+                    cursor: 'pointer',
+                    top: 16,
+                    right: 16,
+                    backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    color: 'white',
+                }}
+            >
+                <EditIcon sx={{ zIndex: 1000 }}/>
+            </IconButton>
             <Box sx={{
                 position: 'absolute',
                 right: -20,

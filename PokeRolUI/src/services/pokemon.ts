@@ -36,3 +36,13 @@ export const getPokemonById = async (id: string) => {
         throw error;
     }
 }
+
+export const updatePokemon = async (id: string, pokemon: Pokemon) => {
+    try {
+        const { data } = await axios.put(`/pokemon/${id}`, pokemon);
+        return data;
+    } catch (error) {
+        console.error('Error updating Pokémon:', error)
+        throw error;
+    }
+}

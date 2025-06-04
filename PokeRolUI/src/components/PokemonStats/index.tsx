@@ -1,13 +1,14 @@
 import { Box, Typography } from "@mui/material";
 import { Pokemon } from "../../types/pokemon";
 import StatBar from "./StatBar";
+import { usePokemonStats } from "../../utils/pokemonUtils";
 interface PokemonStatsProps {
     pokemon: Pokemon;
 }
 
 const PokemonStats = ({ pokemon }: PokemonStatsProps) => {
-    const { stats, ivs, evs } = pokemon;
-
+    const { stats, level, ivs, evs } = pokemon;
+    const { customStats } = usePokemonStats({ stats, level, evs, ivs });
     return (
         <Box sx={{
             width: '100%',
@@ -41,12 +42,12 @@ const PokemonStats = ({ pokemon }: PokemonStatsProps) => {
                 >
                     Stats
                 </Typography>
-                <StatBar stat="HP" value={stats.hp} maxValue={400} />
-                <StatBar stat="Attack" value={stats.attack} maxValue={400} />
-                <StatBar stat="Special Attack" value={stats.specialAttack} maxValue={400} />
-                <StatBar stat="Defense" value={stats.defense} maxValue={400} />
-                <StatBar stat="Special Defense" value={stats.specialDefense} maxValue={400} />
-                <StatBar stat="Speed" value={stats.speed} maxValue={400} />
+                <StatBar stat="HP" value={customStats.hp} maxValue={50} />
+                <StatBar stat="Attack" value={customStats.attack} maxValue={50} />
+                <StatBar stat="Special Attack" value={customStats.specialAttack} maxValue={50} />
+                <StatBar stat="Defense" value={customStats.defense} maxValue={50} />
+                <StatBar stat="Special Defense" value={customStats.specialDefense} maxValue={50} />
+                <StatBar stat="Speed" value={customStats.speed} maxValue={50} />
             </Box>
             {/* IVs */}
             <Box sx={{

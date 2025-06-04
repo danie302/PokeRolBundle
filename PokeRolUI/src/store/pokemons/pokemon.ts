@@ -20,6 +20,8 @@ const initialState: Pokemon = {
     moves: [],
     description: '',
     isShiny: false,
+    abilities: [],
+    availableMoves: []
 }
 
 export const pokemonSlice = createSlice({

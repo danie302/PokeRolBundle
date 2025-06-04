@@ -106,6 +106,8 @@
     "nature": "Nature",
     "description": "Description",
     "notFound": "Not Found",
-    "loadingAbilities": "Loading abilities..."
+    "loadingAbilities": "Loading abilities...",
+    "notes": "Notes",
+    "noNotes": "No notes found"
   }
 }

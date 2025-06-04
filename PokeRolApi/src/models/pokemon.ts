@@ -27,7 +27,7 @@ const abilitySchema = new mongoose.Schema({
 
 // Define pokemon schema
 const pokemonSchema = new mongoose.Schema({
-    pokeApiId: { type: Number, required: true, unique: true },
+    pokeApiId: { type: Number, required: true },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
     name: { type: String, required: true },
     type: { type: [String], required: true },
