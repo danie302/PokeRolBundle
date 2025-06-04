@@ -16,27 +16,6 @@ import PokemonAbility from "../../components/PokemonAbility";
 import PokemonMoves from "../../components/PokemonMoves";
 import PokemonNotes from "../../components/PokemonNotes";
 
-const mockMoves: Move[] = [
-    {
-        name: "Tackle",
-        type: "normal",
-        power: 40,
-        accuracy: 100,
-    },
-    {
-        name: "Fire Fang",
-        type: "fire",   
-        power: 65,
-        accuracy: 95,
-    },
-    {
-        name: "Thunderbolt",
-        type: "electric",
-        power: 90,
-        accuracy: 100,
-    }  
-];
-
 const PokemonDetails = () => {
     const { pokemonId, teamId } = useParams();
     const user = useAppSelector((state: RootState) => state.user);
@@ -76,7 +55,7 @@ const PokemonDetails = () => {
                     type={pokemon.type[0]} 
                 />
                 {/* Moves */}
-                <PokemonMoves moves={mockMoves} />
+                <PokemonMoves moves={pokemon.moves} />
                 {/* Notes */}
                 <PokemonNotes notes={pokemon.description} />
             </Container>

@@ -30,3 +30,17 @@ export const getUser = async () => {
     }
     return user;
 };
+
+export const verifyToken = async () => {
+    try {
+        const response = await axios.get('/auth/alive');
+        if(response.status === 200) {
+            return true;
+        }
+        return false;
+    } catch (error) {
+        localStorage.removeItem('token');
+        delete axios.defaults.headers.common['Authorization'];
+        return false;
+    }
+};

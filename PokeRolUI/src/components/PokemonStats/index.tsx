@@ -43,7 +43,9 @@ const PokemonStats = ({ pokemon }: PokemonStatsProps) => {
                 </Typography>
                 <StatBar stat="HP" value={stats.hp} maxValue={400} />
                 <StatBar stat="Attack" value={stats.attack} maxValue={400} />
+                <StatBar stat="Special Attack" value={stats.specialAttack} maxValue={400} />
                 <StatBar stat="Defense" value={stats.defense} maxValue={400} />
+                <StatBar stat="Special Defense" value={stats.specialDefense} maxValue={400} />
                 <StatBar stat="Speed" value={stats.speed} maxValue={400} />
             </Box>
             {/* IVs */}
@@ -67,7 +69,9 @@ const PokemonStats = ({ pokemon }: PokemonStatsProps) => {
                 </Typography>
                 <StatBar stat="HP" value={ivs.hp} maxValue={31} />
                 <StatBar stat="Attack" value={ivs.attack} maxValue={31} />
+                <StatBar stat="Special Attack" value={ivs.specialAttack} maxValue={31} />
                 <StatBar stat="Defense" value={ivs.defense} maxValue={31} />
+                <StatBar stat="Special Defense" value={ivs.specialDefense} maxValue={31} />
                 <StatBar stat="Speed" value={ivs.speed} maxValue={31} />
             </Box>
             {/* EVs */}
@@ -91,7 +95,9 @@ const PokemonStats = ({ pokemon }: PokemonStatsProps) => {
                 </Typography>
                 <StatBar stat="HP" value={evs.hp} maxValue={255} />
                 <StatBar stat="Attack" value={evs.attack} maxValue={255} />
+                <StatBar stat="Special Attack" value={evs.specialAttack} maxValue={255} />
                 <StatBar stat="Defense" value={evs.defense} maxValue={255} />
+                <StatBar stat="Special Defense" value={evs.specialDefense} maxValue={255} />
                 <StatBar stat="Speed" value={evs.speed} maxValue={255} />
             </Box>
         </Box>

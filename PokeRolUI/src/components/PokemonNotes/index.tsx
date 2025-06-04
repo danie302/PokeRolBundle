@@ -1,5 +1,6 @@
 import { Box, Typography, Paper, TextField, CircularProgress } from "@mui/material";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 
 interface PokemonNotesProps {
     notes: string;
@@ -14,6 +15,7 @@ const PokemonNotes = ({
     editable = false,
     isLoading = false 
 }: PokemonNotesProps) => {
+    const { t } = useTranslation();
     const [content, setContent] = useState(notes);
 
     // Update content when notes prop changes
@@ -73,7 +75,7 @@ const PokemonNotes = ({
                         textShadow: '1px 1px 2px rgba(0,0,0,0.2)',
                     }}
                 >
-                    Notes
+                    {t('pokemon.notes')}
                 </Typography>
 
                 {isLoading ? (
@@ -98,7 +100,7 @@ const PokemonNotes = ({
                         value={content}
                         onChange={handleChange}
                         variant="outlined"
-                        placeholder="Add your notes here..."
+                        placeholder={t('pokemon.addNotes')}
                         sx={{
                             backgroundColor: 'white',
                             borderRadius: '4px',
@@ -134,7 +136,7 @@ const PokemonNotes = ({
                             wordBreak: 'break-word',
                         }}
                     >
-                        {content || 'No notes available'}
+                        {content || t('pokemon.noNotes')}
                     </Box>
                 )}
             </Box>

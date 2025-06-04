@@ -5,8 +5,10 @@ import { Button, IconButton, Drawer, List, ListItem, ListItemText } from "@mui/m
 import { Link as RouterLink } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
-import { useAppSelector } from "../../store/store";
+import { useAppSelector, useAppDispatch } from "../../store/store";
 import { RootState } from "../../store/store";
+import axios from "axios";
+import { clearUser } from "../../store/users/user";
 
 const Navbar = () => {
   const { t } = useTranslation();
@@ -15,6 +17,7 @@ const Navbar = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const user = useAppSelector((state: RootState) => state.user);
+  const dispatch = useAppDispatch();
   
   useEffect(() => {
     // Check if user is logged in
@@ -27,6 +30,8 @@ const Navbar = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('token');
+    delete axios.defaults.headers.common['Authorization'];
+    dispatch(clearUser());
     setIsLoggedIn(false);
     window.location.href = '/';
   };
@@ -34,13 +39,13 @@ const Navbar = () => {
   // Create navigation items based on auth state
   const navItems = isLoggedIn 
     ? [
-        { text: t('dashboard'), path: '/dashboard' },
-        { text: t('logout'), action: handleLogout }
+        { text: t('navbar.dashboard'), path: '/dashboard' },
+        { text: t('navbar.logout'), action: handleLogout }
       ]
     : [
-        { text: t('home'), path: '/' },
-        { text: t('login'), path: '/login' },
-        { text: t('register'), path: '/register' }
+        { text: t('navbar.home'), path: '/' },
+        { text: t('navbar.login'), path: '/login' },
+        { text: t('navbar.register'), path: '/register' }
       ];
 
   const drawer = (
@@ -144,7 +149,7 @@ const Navbar = () => {
             }
           }}
         >
-          PokéRol
+          PokeRol
         </Typography>
 
         {isMobile ? (

@@ -1,8 +1,20 @@
 {
   "pokerol": "PokeRol",
   "home": "Inicio",
-  "login": "Iniciar sesión",
-  "register": "Registrarse",
+  "login": "Iniciar Sesión",
+  "register": "Registrar",
+  "common": {
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "back": "Volver"
+  },
+  "navbar": {
+    "home": "Inicio",
+    "login": "Iniciar Sesión",
+    "register": "Registrar",
+    "dashboard": "Equipos",
+    "logout": "Cerrar Sesión"
+  },  
   "homepage": {
     "title": "Bienvenido a PokéRol",
     "description": "Tu compañero de rol Pokémon definitivo",
@@ -10,45 +22,94 @@
     "features": "Características",
     "createCharacters": "Crear Personajes",
     "manageYourTeam": "Gestionar Tu Equipo",
-    "joinAdventures": "Unirte a Aventuras",
-    "createCharactersDescription": "Crea y personaliza tu entrenador Pokémon con habilidades y rasgos únicos",
+    "joinAdventures": "Unirse a Aventuras",
+    "createCharactersDescription": "Crea y personaliza tu entrenador Pokémon con habilidades únicas y rasgos",
     "manageYourTeamDescription": "Rastrea y evoluciona tu colección de Pokémon con estadísticas detalladas",
     "joinAdventuresDescription": "Embárcate en aventuras con otros entrenadores en un entorno de juego dinámico",
-    "readyToStart": "¿Listo para comenzar tu aventura Pokémon?",
+    "readyToStart": "¿Listo para empezar tu aventura Pokémon?",
     "registerNow": "Regístrate Ahora" 
   },
   "loginpage": {
-    "title": "Iniciar Sesión de Entrenador",
+    "title": "Iniciar Sesión",
     "description": "Tu compañero de rol Pokémon definitivo",
     "email": "Dirección de Email",
     "password": "Contraseña",
     "button": "Iniciar Sesión",
     "forgotPassword": "¿Olvidaste tu contraseña?",
-    "signUp": "¿Nuevo entrenador? Regístrate"
+    "signUp": "Nuevo Entrenador? Regístrate"
   },
   "registerpage": {
     "title": "Registro de Entrenador",
     "description": "Crea tu cuenta de entrenador Pokémon",
     "firstName": "Nombre",
     "lastName": "Apellido",
-    "username": "Nombre de usuario",
-    "email": "Correo electrónico",
+    "username": "Nombre de Usuario",
+    "email": "Dirección de Email",
     "password": "Contraseña",
-    "confirmPassword": "Confirmar contraseña",
-    "register": "Registrarse",
-    "alreadyHaveAccount": "¿Ya tienes una cuenta? Iniciar sesión",
+    "confirmPassword": "Confirmar Contraseña",
+    "register": "Registrar",
+    "alreadyHaveAccount": "¿Ya tienes una cuenta? Iniciar Sesión",
     "chooseStarter": "Elige tu Pokémon inicial",
     "starterDescription": "Cada entrenador comienza con un Pokémon inicial único. ¡Elige sabiamente!"
+  },
+  "dashboard": {
+    "title": "Mis Equipos de Pokémon",
+    "description": "Gestiona tus equipos de Pokémon y prepárate para tu próxima aventura!",
+    "createTeam": "Crear Nuevo Equipo"
   },
   "errors": {
     "firstName": "Nombre es requerido",
     "lastName": "Apellido es requerido",
     "username": "Nombre de usuario es requerido",
-    "email-required": "Correo electrónico es requerido",
-    "email-invalid": "Correo electrónico inválido",
+    "email-required": "Email es requerido",
+    "email-invalid": "Dirección de email inválida",
     "password-required": "Contraseña es requerida",
     "password-minlength": "La contraseña debe tener al menos 8 caracteres",
     "confirmPassword-required": "Confirmar contraseña es requerida",
-    "confirmPassword-match": "Las contraseñas no coinciden"
+    "confirmPassword-match": "Las contraseñas no coinciden",
+    "addingPokemon": "Error al agregar Pokémon al equipo..."
+  },
+  "team": {
+    "description": "Descripción del Equipo",
+    "pokemon": "Pokémon",
+    "pokemons": "Pokémons",
+    "addPokemon": "Agregar Pokémon",
+    "noTeam": "No se encontró equipo",
+    "addFirstPokemon": "Agrega tu primer Pokémon a tu equipo",
+    "noPokemon": "No se encontró Pokémon",
+    "addToTeam": "Agregar a Equipo",
+    "selectDifferent": "Seleccionar Pokémon diferente",
+    "errorAddingPokemon": "Error al agregar Pokémon al equipo"
+  },
+  "search": {
+    "pokemonNameOrId": "Buscar un Pokémon por nombre o ID",
+    "noResults": "No se encontraron resultados",
+    "search": "Buscar",
+    "results": "Resultados",
+    "typeToSearch": "Escribe para buscar",
+    "foundCount": "Se encontraron {{count}} resultados",
+    "searching": "Buscando..."
+  },
+  "pokemon": {
+    "normal": "Normal",
+    "shiny": "Shiny",
+    "appearance": "Apariencia",
+    "abilities": "Habilidades",
+    "selectAbility": "Seleccionar Habilidad",
+    "hiddenAbility": "Habilidad Oculta",
+    "stats": "Estadísticas",
+    "statusConditions": "Condiciones de Estado",
+    "basic": "Información Básica", 
+    "edit": "Editar",
+    "level": "Nivel", 
+    "experience": "Experiencia",
+    "nature": "Naturaleza",
+    "description": "Descripción",
+    "notFound": "No Encontrado",
+    "loadingAbilities": "Cargando habilidades...",
+    "notes": "Notas",
+    "addNotes": "Añade tus notas aquí...",
+    "noNotes": "No hay notas disponibles",
+    "loadingNotes": "Cargando notas..."
   }
 }

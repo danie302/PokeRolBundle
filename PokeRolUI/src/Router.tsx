@@ -3,14 +3,26 @@ import { routes } from "./config/routes";
 import { Container } from "@mui/material";
 import Navbar from "./components/Navbar";
 import { PrivateRoutes } from "./config/privateRoutes";
-import { getUser } from "./services/auth";
+import { getUser, verifyToken } from "./services/auth";
 import { useEffect } from "react";
 import { setUser } from "./store/users/user";
 import { useAppDispatch } from "./store/store";
 
+const validateToken = async () => {
+  const isTokenAlive = await verifyToken();
+  if(!isTokenAlive) {
+    window.location.href = '/login';
+  }
+}
+
 function Router() {
   const dispatch = useAppDispatch();
   useEffect(() => {
+    // Validate token if user is logged in
+    const token = localStorage.getItem('token');
+    if(token) {
+      validateToken();
+    }
     const fetchUser = async () => {
       const user = await getUser();
       // Set user in redux

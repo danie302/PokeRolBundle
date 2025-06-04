@@ -8,6 +8,13 @@
     "save": "Save",
     "back": "Back"
   },
+  "navbar": {
+    "home": "Home",
+    "login": "Login",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "logout": "Logout"
+  },
   "homepage": {
     "title": "Welcome to PokéRol",
     "description": "Your ultimate Pokémon role-playing companion",
@@ -44,6 +51,11 @@
     "alreadyHaveAccount": "Already have an account? Login",
     "chooseStarter": "Choose your starter Pokémon",
     "starterDescription": "Each trainer starts with a unique starter Pokémon. Choose wisely!"
+  },
+  "dashboard": {
+    "title": "My Pokémon Teams",
+    "description": "Manage your Pokémon teams and get ready for your next adventure!",
+    "createTeam": "Create New Team"
   },
   "errors": {
     "firstName": "First name is required",

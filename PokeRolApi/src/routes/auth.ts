@@ -24,6 +24,11 @@ router.post('/login', async (req: Request<{}, {}, LoginRequest>, res: Response<{
     res.json({ token });
 });
 
+// Verify token alive
+router.get('/alive', verifyToken, (req: Request, res: Response) => {
+    res.json({ message: 'Token is alive' });
+});
+
 export default router;
 
 
