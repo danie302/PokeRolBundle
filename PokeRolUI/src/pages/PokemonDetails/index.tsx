@@ -46,7 +46,6 @@ const PokemonDetails = () => {
     };
 
     const handleSavePokemon = (updatedPokemon: Pokemon) => {
-        // TODO: Implement the API call to update the pokemon
         updatePokemon(pokemon.id, updatedPokemon);
         dispatch(selectedPokemon(updatedPokemon));
     };
