@@ -36,7 +36,6 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
     const [moveSearchQuery, setMoveSearchQuery] = useState('');
     const [searchResults, setSearchResults] = useState<PokeApiMove[]>([]);
     const [loadingMoves, setLoadingMoves] = useState(false);
-    const [showMoveSearch, setShowMoveSearch] = useState(false);
 
     // Load current pokemon data when modal opens
     useEffect(() => {
@@ -59,7 +58,6 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
             setAvailableAbilities([]);
             setMoveSearchQuery('');
             setSearchResults([]);
-            setShowMoveSearch(false);
         }
     }, [open, pokemon]);
 
