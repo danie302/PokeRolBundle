@@ -17,6 +17,8 @@ export interface Move {
     type: string;
     power: number;
     accuracy: number;
+    description: string;
+    damage_class: string;
 }
 
 export interface Pokemon {

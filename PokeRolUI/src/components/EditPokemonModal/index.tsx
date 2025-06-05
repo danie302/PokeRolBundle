@@ -24,6 +24,7 @@ interface PokeApiMove {
     accuracy: number | null;
     type: string;
     damage_class: string;
+    description: string;
 }
 
 const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalProps) => {
@@ -122,13 +123,20 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                 const moveDetailResponse = await axios.get(move.url);
                 const moveData = moveDetailResponse.data;
                 
+                // Find English description
+                const englishEffectEntry = moveData.effect_entries?.find(
+                    (entry: any) => entry.language.name === 'en'
+                );
+                const description = englishEffectEntry?.effect || 'No description available.';
+                
                 return {
                     name: moveData.name,
                     url: move.url,
                     power: moveData.power,
                     accuracy: moveData.accuracy,
                     type: moveData.type.name,
-                    damage_class: moveData.damage_class.name
+                    damage_class: moveData.damage_class.name,
+                    description: description
                 };
             });
 
@@ -152,7 +160,9 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
             name: pokeApiMove.name,
             type: pokeApiMove.type,
             power: pokeApiMove.power || 0,
-            accuracy: pokeApiMove.accuracy || 0
+            accuracy: pokeApiMove.accuracy || 0,
+            description: pokeApiMove.description,
+            damage_class: pokeApiMove.damage_class
         };
 
         setSelectedMoves([...selectedMoves, newMove]);
@@ -433,20 +443,47 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                             {/* Current ability display */}
                                             <Box sx={{ 
                                                 mb: 3, 
-                                                p: 2, 
-                                                backgroundColor: 'rgba(156, 39, 176, 0.1)',
+                                                p: 2.5,
+                                                backgroundColor: 'rgba(156, 39, 176, 0.08)',
                                                 borderRadius: 2,
-                                                border: '2px solid rgba(156, 39, 176, 0.3)',
+                                                border: '1px solid rgba(156, 39, 176, 0.2)',
                                             }}>
-                                                <Typography variant="subtitle2" sx={{ color: '#9C27B0', fontWeight: 'bold', mb: 1 }}>
-                                                    Habilidad Actual:
+                                                <Typography variant="subtitle1" sx={{ color: '#863f94', fontWeight: 'bold', mb: 1.5 }}>
+                                                    Habilidad Seleccionada:
                                                 </Typography>
-                                                <Typography variant="body1" sx={{ fontWeight: 'bold', textTransform: 'capitalize', mb: 1 }}>
-                                                    {selectedAbility?.replace('-', ' ') || 'No seleccionada'}
-                                                </Typography>
-                                                {availableAbilities.find(a => a.name === selectedAbility)?.description && (
+                                                
+                                                {selectedAbility && availableAbilities.length > 0 ? (() => {
+                                                    const currentAbilityDetails = availableAbilities.find(a => a.name === selectedAbility);
+                                                    return (
+                                                        <Box>
+                                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+                                                                <Typography variant="h6" sx={{ fontWeight: 'bold', textTransform: 'capitalize', color: '#6a1b9a' }}>
+                                                                    {selectedAbility.replace('-', ' ')}
+                                                                </Typography>
+                                                                {currentAbilityDetails && (
+                                                                    <Chip 
+                                                                        label={currentAbilityDetails.is_hidden ? "Oculta" : "Estándar"}
+                                                                        size="small" 
+                                                                        sx={{ 
+                                                                            bgcolor: currentAbilityDetails.is_hidden ? 'rgba(255, 152, 0, 0.2)' : 'rgba(156, 39, 176, 0.2)',
+                                                                            color: currentAbilityDetails.is_hidden ? '#FF9800' : '#9C27B0',
+                                                                            fontSize: '0.75rem',
+                                                                            fontWeight: 'medium',
+                                                                            height: 22
+                                                                        }} 
+                                                                    />
+                                                                )}
+                                                            </Box>
+                                                            {currentAbilityDetails?.description && (
+                                                                <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', lineHeight: 1.6 }}>
+                                                                    {currentAbilityDetails.description}
+                                                                </Typography>
+                                                            )}
+                                                        </Box>
+                                                    );
+                                                })() : (
                                                     <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>
-                                                        {availableAbilities.find(a => a.name === selectedAbility)?.description}
+                                                        No hay habilidad seleccionada o datos no disponibles.
                                                     </Typography>
                                                 )}
                                             </Box>

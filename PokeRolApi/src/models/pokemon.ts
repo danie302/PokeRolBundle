@@ -6,7 +6,9 @@ const moveSchema = new mongoose.Schema({
     name: { type: String, required: true },
     type: { type: String, required: true },
     power: { type: Number, required: true },
-    accuracy: { type: Number, required: true }
+    accuracy: { type: Number, required: true },
+    description: { type: String, required: false },
+    damage_class: { type: String, required: false }
 });
 
 // Define stats schema
