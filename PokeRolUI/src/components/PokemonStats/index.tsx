@@ -47,7 +47,7 @@ const PokemonStats = ({ pokemon }: PokemonStatsProps) => {
                 <StatBar stat="Special Attack" value={customStats.specialAttack} maxValue={50} />
                 <StatBar stat="Defense" value={customStats.defense} maxValue={50} />
                 <StatBar stat="Special Defense" value={customStats.specialDefense} maxValue={50} />
-                <StatBar stat="Speed" value={customStats.speed} maxValue={50} />
+                <StatBar stat="Speed" value={customStats.speed} maxValue={200} />
             </Box>
             {/* IVs */}
             <Box sx={{

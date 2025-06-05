@@ -33,7 +33,7 @@ export const usePokemonStats = ({ stats, level, evs, ivs }: UsePokemonStatsProps
       defense: Math.round(defenseBase / 10),
       specialAttack: Math.round(specialAttackBase / 10),
       specialDefense: Math.round(specialDefenseBase / 10),
-      speed: Math.round(speedBase / 10)
+      speed: Math.round(speedBase)
     }
   }, [stats, level, evs, ivs])
 
