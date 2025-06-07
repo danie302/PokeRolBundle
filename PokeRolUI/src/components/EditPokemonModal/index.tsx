@@ -3,6 +3,7 @@ import { Edit as EditIcon, Speed as StatsIcon, Psychology as AbilityIcon, Sports
 import { Pokemon, Move } from "../../types/pokemon";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 interface EditPokemonModalProps {
     open: boolean;
@@ -28,6 +29,7 @@ interface PokeApiMove {
 }
 
 const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalProps) => {
+    const { t } = useTranslation();
     const [selectedMoves, setSelectedMoves] = useState<Move[]>([]);
     const [availableAbilities, setAvailableAbilities] = useState<PokeApiAbility[]>([]);
     const [loadingAbilities, setLoadingAbilities] = useState(false);
@@ -293,10 +295,10 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                         <EditIcon sx={{ fontSize: 32 }} />
                         <Box>
                             <Typography variant="h5" component="h2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-                                Editar Pokémon
+                                {t('pokemonDetails.editPokemon')}
                             </Typography>
                             <Typography variant="body2" sx={{ opacity: 0.9, textTransform: 'capitalize' }}>
-                                {pokemon.name} - Nivel {pokemon.level}
+                                {pokemon.name} - {t('pokemonDetails.level')} {pokemon.level}
                             </Typography>
                         </Box>
                     </Box>
@@ -316,12 +318,12 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                                         <StatsIcon sx={{ color: '#3B4CCA' }} />
                                         <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#3B4CCA' }}>
-                                            Nivel
+                                            {t('pokemonDetails.level')}
                                         </Typography>
                                     </Box>
                                     <TextField
                                         fullWidth
-                                        label="Nivel del Pokémon"
+                                        label={t('pokemonDetails.level')}
                                         name="level"
                                         type="number"
                                         defaultValue={pokemon.level}
@@ -347,20 +349,20 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                                         <StatsIcon sx={{ color: '#4CAF50' }} />
                                         <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#4CAF50' }}>
-                                            IVs (Valores Individuales)
+                                            {t('pokemonDetails.ivs')}
                                         </Typography>
                                     </Box>
                                     <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                                        Valores de 0 a 31 que determinan las estadísticas base del Pokémon
+                                        {t('pokemonDetails.ivsDescription')}
                                     </Typography>
                                     <Grid container spacing={2}>
                                         {[
-                                            { key: 'hp', label: 'HP' },
-                                            { key: 'attack', label: 'Ataque' },
-                                            { key: 'defense', label: 'Defensa' },
-                                            { key: 'specialAttack', label: 'At. Esp.' },
-                                            { key: 'specialDefense', label: 'Def. Esp.' },
-                                            { key: 'speed', label: 'Velocidad' }
+                                            { key: 'hp', label: t('pokemonDetails.hp') },
+                                            { key: 'attack', label: t('pokemonDetails.attack') },
+                                            { key: 'defense', label: t('pokemonDetails.defense') },
+                                            { key: 'specialAttack', label: t('pokemonDetails.specialAttack') },
+                                            { key: 'specialDefense', label: t('pokemonDetails.specialDefense') },
+                                            { key: 'speed', label: t('pokemonDetails.speed') }
                                         ].map((stat) => (
                                             <Grid size={4} key={stat.key}>
                                                 <StatField
@@ -387,20 +389,20 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                                         <StatsIcon sx={{ color: '#FF9800' }} />
                                         <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#FF9800' }}>
-                                            EVs (Valores de Esfuerzo)
+                                            {t('pokemonDetails.evs')}
                                         </Typography>
                                     </Box>
                                     <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-                                        Valores de 0 a 252 ganados mediante entrenamiento
+                                        {t('pokemonDetails.evsDescription')}
                                     </Typography>
                                     <Grid container spacing={2}>
                                         {[
-                                            { key: 'hp', label: 'HP' },
-                                            { key: 'attack', label: 'Ataque' },
-                                            { key: 'defense', label: 'Defensa' },
-                                            { key: 'specialAttack', label: 'At. Esp.' },
-                                            { key: 'specialDefense', label: 'Def. Esp.' },
-                                            { key: 'speed', label: 'Velocidad' }
+                                            { key: 'hp', label: t('pokemonDetails.hp') },
+                                            { key: 'attack', label: t('pokemonDetails.attack') },
+                                            { key: 'defense', label: t('pokemonDetails.defense') },
+                                            { key: 'specialAttack', label: t('pokemonDetails.specialAttack') },
+                                            { key: 'specialDefense', label: t('pokemonDetails.specialDefense') },
+                                            { key: 'speed', label: t('pokemonDetails.speed') }
                                         ].map((stat) => (
                                             <Grid size={4} key={stat.key}>
                                                 <StatField
@@ -427,7 +429,7 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                                         <AbilityIcon sx={{ color: '#9C27B0' }} />
                                         <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#9C27B0' }}>
-                                            Habilidades Disponibles
+                                            {t('pokemonDetails.abilities')}
                                         </Typography>
                                     </Box>
 
@@ -435,7 +437,7 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                         <Box sx={{ textAlign: 'center', p: 3 }}>
                                             <CircularProgress size={32} sx={{ color: '#9C27B0', mb: 2 }} />
                                             <Typography variant="body2" color="text.secondary">
-                                                Cargando habilidades desde PokeAPI...
+                                                {t('pokemonDetails.loadingAbilities')}
                                             </Typography>
                                         </Box>
                                     ) : (
@@ -449,7 +451,7 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                                 border: '1px solid rgba(156, 39, 176, 0.2)',
                                             }}>
                                                 <Typography variant="subtitle1" sx={{ color: '#863f94', fontWeight: 'bold', mb: 1.5 }}>
-                                                    Habilidad Seleccionada:
+                                                    {t('pokemonDetails.selectedAbility')}
                                                 </Typography>
                                                 
                                                 {selectedAbility && availableAbilities.length > 0 ? (() => {
@@ -462,7 +464,7 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                                                 </Typography>
                                                                 {currentAbilityDetails && (
                                                                     <Chip 
-                                                                        label={currentAbilityDetails.is_hidden ? "Oculta" : "Estándar"}
+                                                                        label={currentAbilityDetails.is_hidden ? t('pokemonDetails.hidden') : t('pokemonDetails.standard')}
                                                                         size="small" 
                                                                         sx={{ 
                                                                             bgcolor: currentAbilityDetails.is_hidden ? 'rgba(255, 152, 0, 0.2)' : 'rgba(156, 39, 176, 0.2)',
@@ -483,18 +485,18 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                                     );
                                                 })() : (
                                                     <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic' }}>
-                                                        No hay habilidad seleccionada o datos no disponibles.
+                                                        {t('pokemonDetails.noAbilitySelected')}
                                                     </Typography>
                                                 )}
                                             </Box>
 
                                             {/* Ability selector */}
                                             <FormControl fullWidth sx={{ mb: 2 }}>
-                                                <InputLabel>Cambiar habilidad</InputLabel>
+                                                <InputLabel>{t('pokemonDetails.changeAbility')}</InputLabel>
                                                 <Select
                                                     value={selectedAbility}
                                                     onChange={handleAbilityChange}
-                                                    label="Cambiar habilidad"
+                                                    label={t('pokemonDetails.changeAbility')}
                                                     sx={{
                                                         borderRadius: 2,
                                                         backgroundColor: 'white',
@@ -517,7 +519,7 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                                                     {ability.name.replace('-', ' ')}
                                                                     {ability.is_hidden && (
                                                                         <Chip 
-                                                                            label="Oculta" 
+                                                                            label={t('pokemonDetails.hidden')} 
                                                                             size="small" 
                                                                             sx={{ 
                                                                                 bgcolor: 'rgba(156, 39, 176, 0.2)',
@@ -561,18 +563,18 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                                         <MovesIcon sx={{ color: '#F44336' }} />
                                         <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#F44336' }}>
-                                            Movimientos ({selectedMoves.length})
+                                            {t('pokemonDetails.moves')} ({selectedMoves.length})
                                         </Typography>
                                     </Box>
                                     
                                     <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
-                                        Busca y agrega cualquier movimiento de la PokeAPI
+                                        {t('pokemonDetails.movesDescription')}
                                     </Typography>
 
                                     {/* Current moves */}
                                     <Box sx={{ mb: 3 }}>
                                         <Typography variant="subtitle2" sx={{ mb: 2, color: '#F44336', fontWeight: 'bold' }}>
-                                            Movimientos Actuales:
+                                            {t('pokemonDetails.currentMoves')}
                                         </Typography>
                                         {selectedMoves.length > 0 ? (
                                             <Box sx={{ 
@@ -613,7 +615,7 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                             </Box>
                                         ) : (
                                             <Typography variant="body2" color="text.secondary" sx={{ fontStyle: 'italic', p: 2 }}>
-                                                No hay movimientos seleccionados
+                                                {t('pokemonDetails.noMovesSelected')}
                                             </Typography>
                                         )}
                                     </Box>
@@ -623,8 +625,8 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                         <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', mb: 2 }}>
                                             <TextField
                                                 fullWidth
-                                                label="Buscar movimientos"
-                                                placeholder="Ej: thunderbolt, fire, punch..."
+                                                label={t('pokemonDetails.searchMoves')}
+                                                placeholder={t('pokemonDetails.searchMovesPlaceholder')}
                                                 value={moveSearchQuery}
                                                 onChange={(e) => setMoveSearchQuery(e.target.value)}
                                                 onKeyPress={(e) => {
@@ -666,7 +668,7 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                                 border: '1px solid rgba(244, 67, 54, 0.2)',
                                             }}>
                                                 <Typography variant="subtitle2" sx={{ mb: 2, color: '#F44336', fontWeight: 'bold' }}>
-                                                    Resultados de búsqueda ({searchResults.length}):
+                                                    {t('pokemonDetails.searchResults')} ({searchResults.length}):
                                                 </Typography>
                                                 <Grid container spacing={1}>
                                                     {searchResults.map((move) => (
@@ -712,7 +714,7 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                                                             />
                                                                             {selectedMoves.find(m => m.name === move.name) && (
                                                                                 <Chip 
-                                                                                    label="Agregado" 
+                                                                                    label={t('pokemonDetails.added')} 
                                                                                     size="small"
                                                                                     color="success"
                                                                                     sx={{ fontSize: '0.7rem' }}
@@ -721,13 +723,13 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                                                         </Box>
                                                                         <Box sx={{ display: 'flex', gap: 2 }}>
                                                                             <Typography variant="body2" color="text.secondary">
-                                                                                <strong>Poder:</strong> {move.power || 'N/A'}
+                                                                                <strong>{t('pokemonDetails.power')}:</strong> {move.power || 'N/A'}
                                                                             </Typography>
                                                                             <Typography variant="body2" color="text.secondary">
-                                                                                <strong>Precisión:</strong> {move.accuracy || 'N/A'}%
+                                                                                <strong>{t('pokemonDetails.accuracy')}:</strong> {move.accuracy || 'N/A'}%
                                                                             </Typography>
                                                                             <Typography variant="body2" color="text.secondary" sx={{ textTransform: 'capitalize' }}>
-                                                                                <strong>Clase:</strong> {move.damage_class}
+                                                                                <strong>{t('pokemonDetails.damageClass')}:</strong> {move.damage_class}
                                                                             </Typography>
                                                                         </Box>
                                                                     </Box>
@@ -758,7 +760,7 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
 
                                         {moveSearchQuery.length >= 2 && searchResults.length === 0 && !loadingMoves && (
                                             <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center', p: 2, fontStyle: 'italic' }}>
-                                                No se encontraron movimientos que coincidan con "{moveSearchQuery}"
+                                                {t('pokemonDetails.noMovesFound')} "{moveSearchQuery}"
                                             </Typography>
                                         )}
                                     </Box>
@@ -767,7 +769,7 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                     {pokemon.availableMoves && pokemon.availableMoves.length > 0 && (
                                         <Box sx={{ mt: 3 }}>
                                             <Typography variant="subtitle2" sx={{ mb: 2, color: '#F44336', fontWeight: 'bold' }}>
-                                                Movimientos Originales del Pokémon:
+                                                {t('pokemonDetails.originalMoves')}
                                             </Typography>
                                             <Box sx={{ 
                                                 display: 'flex', 
@@ -812,12 +814,12 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                     <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 2 }}>
                                         <NotesIcon sx={{ color: '#607D8B' }} />
                                         <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#607D8B' }}>
-                                            Notas
+                                            {t('pokemonDetails.notes')}
                                         </Typography>
                                     </Box>
                                     <TextField
                                         fullWidth
-                                        label="Descripción o notas adicionales"
+                                        label={t('pokemonDetails.description')}
                                         name="description"
                                         multiline
                                         rows={4}
@@ -855,7 +857,7 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                 fontWeight: 'bold',
                             }}
                         >
-                            Cancelar
+                            {t('pokemonDetails.cancel')}
                         </Button>
                         <Button 
                             type="submit" 
@@ -876,7 +878,7 @@ const EditPokemonModal = ({ open, onClose, pokemon, onSave }: EditPokemonModalPr
                                 }
                             }}
                         >
-                            Guardar Cambios
+                            {t('pokemonDetails.saveChanges')}
                         </Button>
                     </Box>
                 </form>

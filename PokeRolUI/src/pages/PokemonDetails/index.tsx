@@ -5,7 +5,7 @@ import { useAppSelector } from "../../store/store";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../../store/store";
 import { fetchUserTeams } from "../../services/teams";
-import { setTeams, updateTeam } from "../../store/teams/teams";
+import { setTeams } from "../../store/teams/teams";
 import { selectedPokemon as setSelectedPokemonAction } from "../../store/pokemons/pokemon";
 import { Pokemon } from "../../types/pokemon";
 import { Team } from "../../types/teams";
