@@ -169,6 +169,8 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
           name: selectedAbility.name,
           description: selectedAbility.description
         },
+        abilities: [],
+        availableMoves: [],
         moves: [],
         description: '',
         userId: user.id,

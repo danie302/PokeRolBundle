@@ -15,10 +15,7 @@ export const fetchUserTeams = async (userId: string): Promise<Team[]> => {
         const pokemons = await Promise.all(
           team.pokemons.map(async (pokemonId: string) => {
             const pokemonData = await getPokemonById(pokemonId);
-            return {
-              id: pokemonData._id,
-              ...pokemonData
-            }
+            return pokemonData;
           })
         );
         

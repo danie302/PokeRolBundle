@@ -5,7 +5,6 @@ import {
   Button,
   Typography,
   Alert,
-  Link as RouterLink
 } from '@mui/material';
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
@@ -86,20 +85,20 @@ const ForgotPasswordForm: React.FC<ForgotPasswordFormProps> = ({ success, setSuc
         <Alert severity="success" sx={{ mb: 3 }}>
           {t('forgotPassword.successMessage')} {emailSent}
         </Alert>
-        <Button
-          component={RouterLink}
-          to="/login"
-          variant="contained"
-          fullWidth
-          sx={{
-            mt: 3,
-            py: 1.5,
-            bgcolor: '#CC0000',
-            '&:hover': { bgcolor: '#990000' }
-          }}
-        >
-          {t('forgotPassword.backToLogin')}
-        </Button>
+        <Link to="/login" style={{ textDecoration: 'none', display: 'block' }}>
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{
+              mt: 3,
+              py: 1.5,
+              bgcolor: '#CC0000',
+              '&:hover': { bgcolor: '#990000' }
+            }}
+          >
+            {t('forgotPassword.backToLogin')}
+          </Button>
+        </Link>
       </Box>
     );
   }

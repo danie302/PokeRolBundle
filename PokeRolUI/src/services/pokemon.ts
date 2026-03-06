@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { Pokemon, Ability, Move, Stats } from '../types/pokemon';
+import { Pokemon } from '../types/pokemon';
 
 const POKEAPI_BASE_URL = 'https://pokeapi.co/api/v2'
 

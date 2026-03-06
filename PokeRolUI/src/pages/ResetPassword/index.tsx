@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Paper, CircularProgress } from '@mui/material';
+import { Container, Paper } from '@mui/material';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ResetPasswordForm from '../../components/ResetPasswordForm';
 import ResetPasswordDecorative from '../../components/ResetPasswordDecorative';
