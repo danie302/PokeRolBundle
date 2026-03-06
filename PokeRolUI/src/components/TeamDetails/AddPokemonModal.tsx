@@ -212,12 +212,7 @@ const AddPokemonModal: React.FC<AddPokemonModalProps> = ({
           borderRadius: 2,
           width: '100%',
           maxWidth: 600,
-          backgroundImage: 'url("https://i.imgur.com/EeYQyDO.png")',
-          backgroundSize: '400px',
-          backgroundRepeat: 'repeat',
-          backgroundPosition: 'center',
-          backgroundBlendMode: 'overlay',
-          backgroundColor: 'rgba(255, 255, 255, 0.97)'
+          backgroundColor: '#ffffff'
         }
       }}
     >
