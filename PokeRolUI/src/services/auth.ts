@@ -44,3 +44,13 @@ export const verifyToken = async () => {
         return false;
     }
 };
+
+export const requestPasswordReset = async (email: string) => {
+    const response = await axios.post('/auth/forgot-password', { email });
+    return response;
+};
+
+export const resetPassword = async (token: string, password: string) => {
+    const response = await axios.post('/auth/reset-password', { token, password });
+    return response;
+};

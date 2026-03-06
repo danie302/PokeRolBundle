@@ -1,8 +1,9 @@
 import express, { Request, Response, NextFunction } from 'express';
 import User from '../models/user';
-import { ErrorResponse, LoginRequest } from '../types/request';
+import { ErrorResponse, LoginRequest, ForgotPasswordRequest, ResetPasswordRequest } from '../types/request';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import crypto from 'crypto';
 
 // Define router
 const router = express.Router();
@@ -22,6 +23,56 @@ router.post('/login', async (req: Request<{}, {}, LoginRequest>, res: Response<{
     }
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || '', { expiresIn: '24h' });
     res.json({ token });
+});
+
+// Forgot password - request reset token
+router.post('/forgot-password', async (req: Request<{}, {}, ForgotPasswordRequest>, res: Response<{ message: string } | ErrorResponse>) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    // Don't reveal if email exists or not for security
+    if (!user) {
+        res.json({ message: 'If an account exists with that email, a password reset link has been sent.' });
+        return;
+    }
+
+    // Generate reset token
+    const resetToken = crypto.randomBytes(32).toString('hex');
+    const resetPasswordExpires = new Date(Date.now() + 3600000); // 1 hour from now
+
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = resetPasswordExpires;
+    await user.save();
+
+    // In production, send email here
+    // For now, return the token for testing purposes
+    console.log(`Password reset token for ${email}: ${resetToken}`);
+
+    res.json({
+        message: 'If an account exists with that email, a password reset link has been sent.'
+    });
+});
+
+// Reset password
+router.post('/reset-password', async (req: Request<{}, {}, ResetPasswordRequest>, res: Response<{ message: string } | ErrorResponse>) => {
+    const { token, password } = req.body;
+
+    const user = await User.findOne({
+        resetPasswordToken: token,
+        resetPasswordExpires: { $gt: Date.now() }
+    });
+
+    if (!user) {
+        res.status(400).json({ message: 'Invalid or expired reset token' });
+        return;
+    }
+
+    user.password = password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpires = undefined;
+    await user.save();
+
+    res.json({ message: 'Password has been reset successfully' });
 });
 
 // Verify token alive

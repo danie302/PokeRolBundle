@@ -136,6 +136,8 @@ const LoginForm: React.FC = () => {
           <Button
             variant="text"
             size="small"
+            component={RouterLink}
+            to="/forgot-password"
             sx={{ color: '#3B4CCA' }}
           >
             {t('loginpage.forgotPassword')}

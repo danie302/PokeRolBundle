@@ -1,5 +1,14 @@
 import { t } from "i18next";
-import { LoginUserData, LoginValidationErrors, RegisterUserData, RegisterValidationErrors } from "../types/forms";
+import {
+  LoginUserData,
+  LoginValidationErrors,
+  RegisterUserData,
+  RegisterValidationErrors,
+  ForgotPasswordData,
+  ForgotPasswordValidationErrors,
+  ResetPasswordData,
+  ResetPasswordValidationErrors
+} from "../types/forms";
 
 export const registerValidator = (data: RegisterUserData) => {
     const errors: RegisterValidationErrors = {};
@@ -46,6 +55,36 @@ export const loginValidator = (data: LoginUserData) => {
 
     if (!data.password) {
         errors.password = t('errors.password-required');
+    }
+
+    return errors;
+};
+
+export const forgotPasswordValidator = (data: ForgotPasswordData) => {
+    const errors: ForgotPasswordValidationErrors = {};
+
+    if (!data.email) {
+        errors.email = t('errors.email-required');
+    } else if (!/^\S+@\S+\.\S+$/.test(data.email)) {
+        errors.email = t('errors.email-invalid');
+    }
+
+    return errors;
+};
+
+export const resetPasswordValidator = (data: ResetPasswordData) => {
+    const errors: ResetPasswordValidationErrors = {};
+
+    if (!data.password) {
+        errors.password = t('errors.password-required');
+    } else if (data.password.length < 6) {
+        errors.password = 'Password must be at least 6 characters';
+    }
+
+    if (!data.confirmPassword) {
+        errors.confirmPassword = t('errors.confirmPassword-required');
+    } else if (data.confirmPassword !== data.password) {
+        errors.confirmPassword = t('errors.confirmPassword-match');
     }
 
     return errors;

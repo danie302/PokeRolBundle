@@ -38,6 +38,26 @@
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "signUp": "¿Nuevo Entrenador? Regístrate"
   },
+  "forgotPassword": {
+    "title": "Olvidé Mi Contraseña",
+    "email": "Dirección de Correo Electrónico",
+    "submit": "Enviar Enlace de Restablecimiento",
+    "sending": "Enviando...",
+    "successTitle": "Revisa Tu Correo",
+    "successMessage": "Hemos enviado un enlace para restablecer tu contraseña a",
+    "backToLogin": "Volver al Inicio de Sesión",
+    "rememberPassword": "¿Recuerdas tu contraseña?"
+  },
+  "resetPassword": {
+    "title": "Restablecer Contraseña",
+    "newPassword": "Nueva Contraseña",
+    "confirmPassword": "Confirmar Contraseña",
+    "submit": "Restablecer Contraseña",
+    "resetting": "Restableciendo...",
+    "successTitle": "Contraseña Restablecida con Éxito",
+    "successMessage": "Tu contraseña ha sido restablecida exitosamente. Ahora puedes iniciar sesión con tu nueva contraseña.",
+    "goToLogin": "Ir al Inicio de Sesión"
+  },
   "registerpage": {
     "title": "Registro de Entrenador",
     "description": "Crea tu cuenta de entrenador Pokémon",
