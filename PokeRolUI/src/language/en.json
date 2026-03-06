@@ -3,6 +3,9 @@
   "home": "Home",
   "login": "Login",
   "register": "Register",
+  "back": "Back",
+  "cancel": "Cancel",
+  "delete": "Delete",
   "common": {
     "cancel": "Cancel",
     "save": "Save",
@@ -75,7 +78,9 @@
   "dashboard": {
     "title": "My Pokémon Teams",
     "description": "Manage your Pokémon teams and get ready for your next adventure!",
-    "createTeam": "Create New Team"
+    "createTeam": "Create New Team",
+    "noTeams": "You don't have any teams yet!",
+    "createFirst": "Create your first team to get started on your journey."
   },
   "errors": {
     "firstName": "First name is required",
@@ -99,7 +104,8 @@
     "noPokemon": "No Pokemon found",
     "addToTeam": "Add to Team",
     "selectDifferent": "Select different Pokemon",
-    "errorAddingPokemon": "Error adding Pokemon to team"
+    "errorAddingPokemon": "Error adding Pokemon to team",
+    "errorTeamNotFound": "Team not found."
   },
   "search": {
     "pokemonNameOrId": "Search for a Pokemon by name or ID",
@@ -108,7 +114,8 @@
     "results": "Results",
     "typeToSearch": "Type to search",
     "foundCount": "Found {{count}} results",
-    "searching": "Searching..."
+    "searching": "Searching...",
+    "error": "An error occurred. Please try again."
   },
   "pokemon": {
     "normal": "Normal",
@@ -128,7 +135,9 @@
     "notFound": "Not Found",
     "loadingAbilities": "Loading abilities...",
     "notes": "Notes",
-    "noNotes": "No notes found"
+    "noNotes": "No notes found",
+    "addNotes": "Add notes...",
+    "noDescriptionAvailable": "No description available."
   },
   "pokemonDetails": {
     "editPokemon": "Edit Pokemon",

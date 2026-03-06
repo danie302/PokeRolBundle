@@ -3,6 +3,9 @@
   "home": "Inicio",
   "login": "Acceder",
   "register": "Registrarse",
+  "back": "Volver",
+  "cancel": "Cancelar",
+  "delete": "Eliminar",
   "common": {
     "cancel": "Cancelar",
     "save": "Guardar",
@@ -75,7 +78,9 @@
   "dashboard": {
     "title": "Mis Equipos Pokémon",
     "description": "¡Gestiona tus equipos Pokémon y prepárate para tu próxima aventura!",
-    "createTeam": "Crear Nuevo Equipo"
+    "createTeam": "Crear Nuevo Equipo",
+    "noTeams": "¡Aún no tienes ningún equipo!",
+    "createFirst": "Crea tu primer equipo para comenzar tu aventura."
   },
   "errors": {
     "firstName": "El nombre es obligatorio",
@@ -100,6 +105,7 @@
     "addToTeam": "Añadir al Equipo",
     "selectDifferent": "Seleccionar Pokémon diferente",
     "errorAddingPokemon": "Error al añadir Pokémon al equipo",
+    "errorTeamNotFound": "Equipo no encontrado.",
     "teamNotFoundReal": "El equipo no ha sido encontrado.",
     "errorFetchingTeam": "Error al obtener los detalles del equipo.",
     "noTeamId": "No se proporcionó un ID de equipo."
@@ -111,7 +117,8 @@
     "results": "Resultados",
     "typeToSearch": "Escribe para buscar",
     "foundCount": "Se encontraron {{count}} resultados",
-    "searching": "Buscando..."
+    "searching": "Buscando...",
+    "error": "Ha ocurrido un error. Por favor, inténtalo de nuevo."
   },
   "pokemon": {
     "normal": "Normal",
@@ -131,7 +138,9 @@
     "notFound": "No Encontrado",
     "loadingAbilities": "Cargando habilidades...",
     "notes": "Notas",
-    "noNotes": "No hay notas"
+    "noNotes": "No hay notas",
+    "addNotes": "Añadir notas...",
+    "noDescriptionAvailable": "Descripción no disponible."
   },
   "pokemonDetails": {
     "editPokemon": "Editar Pokémon",
