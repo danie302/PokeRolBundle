@@ -4,6 +4,7 @@ import { ErrorResponse, LoginRequest, ForgotPasswordRequest, ResetPasswordReques
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import crypto from 'crypto';
+import { sendPasswordResetEmail } from '../services/emailService';
 
 // Define router
 const router = express.Router();
@@ -44,9 +45,13 @@ router.post('/forgot-password', async (req: Request<{}, {}, ForgotPasswordReques
     user.resetPasswordExpires = resetPasswordExpires;
     await user.save();
 
-    // In production, send email here
-    // For now, return the token for testing purposes
-    console.log(`Password reset token for ${email}: ${resetToken}`);
+    // Send password reset email
+    try {
+        await sendPasswordResetEmail(email, resetToken);
+    } catch (error) {
+        // Log error but don't fail the request to prevent email enumeration
+        console.error('Failed to send password reset email:', error);
+    }
 
     res.json({
         message: 'If an account exists with that email, a password reset link has been sent.'

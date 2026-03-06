@@ -6,6 +6,8 @@ import userRoutes from './routes/users';
 import pokemonRoutes from './routes/pokemon';
 import authRoutes from './routes/auth';
 import cors from 'cors';
+import { verifyEmailConfig } from './services/emailService';
+
 // Load environment variables
 dotenv.config({
   path: '.env'
@@ -23,6 +25,15 @@ app.use(cors());
 
 // Connect to database
 connectToDB();
+
+// Verify email configuration
+try {
+    verifyEmailConfig();
+    console.log('Email configuration verified successfully');
+} catch (error) {
+    console.warn('Warning: Email configuration is incomplete:', (error as Error).message);
+    console.warn('Password reset emails will not be sent until email configuration is complete');
+}
 
 // Root route
 app.get('/', (req, res) => {
