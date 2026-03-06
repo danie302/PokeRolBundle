@@ -12,17 +12,31 @@ const router = express.Router();
 // Login a user
 router.post('/login', async (req: Request<{}, {}, LoginRequest>, res: Response<{ token: string } | ErrorResponse>) => {
     const { email, password } = req.body;
+
+    // Check if JWT_SECRET is available
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+        console.error('JWT_SECRET environment variable is not set');
+        res.status(500).json({ message: 'Server configuration error' });
+        return;
+    }
+
+    console.log('Login attempt for email:', email);
+
     const user = await User.findOne({ email });
     if(!user) {
+        console.log('User not found for email:', email);
         res.status(401).json({ message: 'Invalid email or password' });
         return;
     }
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if(!isPasswordValid) {
+        console.log('Invalid password for email:', email);
         res.status(401).json({ message: 'Invalid email or password' });
         return;
     }
-    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET || '', { expiresIn: '24h' });
+    const token = jwt.sign({ userId: user._id }, jwtSecret, { expiresIn: '24h' });
+    console.log('JWT token generated successfully for user ID:', user._id);
     res.json({ token });
 });
 
@@ -90,15 +104,36 @@ export default router;
 
 export function verifyToken(req: Request, res: Response, next: NextFunction) {
     const header = req.header("Authorization") || "";
-    const token = header.split(" ")[1];
-    if (!token) {
-      res.status(401).json({ message: "Token not provied" });
+
+    // Safely extract token from Authorization header
+    const parts = header.split(" ");
+    if (parts.length !== 2) {
+      console.log('Invalid Authorization header format:', header);
+      res.status(401).json({ message: "Token not provided or invalid format" });
       return;
     }
+
+    const token = parts[1];
+    if (!token) {
+      console.log('No token found in Authorization header');
+      res.status(401).json({ message: "Token not provided" });
+      return;
+    }
+
+    // Check if JWT_SECRET is available
+    const jwtSecret = process.env.JWT_SECRET;
+    if (!jwtSecret) {
+      console.error('JWT_SECRET environment variable is not set');
+      res.status(500).json({ message: "Server configuration error" });
+      return;
+    }
+
     try {
-      jwt.verify(token, process.env.JWT_SECRET || '');
+      const decoded = jwt.verify(token, jwtSecret);
+      console.log('Token verified successfully for user ID:', (decoded as any).userId);
       next();
     } catch (error) {
+      console.error('Token verification failed:', error);
       res.status(403).json({ message: "Token not valid" });
       return;
     }

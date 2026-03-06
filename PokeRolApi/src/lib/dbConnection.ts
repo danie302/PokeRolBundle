@@ -10,12 +10,21 @@ export const connectToDB = async () => {
     }
 
     // Return cached connection if available
-    if (cachedConnection) {
+    if (cachedConnection && mongoose.connection.readyState === 1) {
+        console.log('Using cached MongoDB connection');
         return cachedConnection;
     }
 
     try {
-        const db = (await mongoose.connect(mongoURI)).connection;
+        // Configure mongoose for serverless environment
+        await mongoose.connect(mongoURI, {
+            serverSelectionTimeoutMS: 5000, // 5 second timeout
+            socketTimeoutMS: 45000, // 45 second socket timeout
+            maxPoolSize: 10, // Connection pool size
+            minPoolSize: 2, // Minimum pool size
+        });
+
+        const db = mongoose.connection;
         console.log('Connected to MongoDB');
         cachedConnection = mongoose; // Cache the connection
         return db;
