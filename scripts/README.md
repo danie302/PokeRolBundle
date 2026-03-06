@@ -58,6 +58,16 @@ Restarts all running services.
 ```
 Stops and removes all containers, volumes, and images. ⚠️ **Warning: This will delete all data!**
 
+### Backup Database
+```bash
+# Backup all databases
+./scripts/backup-db.sh
+
+# Backup a specific database
+./scripts/backup-db.sh database_name
+```
+Creates a compressed backup of the MongoDB database. Backups are saved to the `./backups` directory with a timestamp. The backup is automatically compressed into a `.tar.gz` file.
+
 ## Quick Reference
 
 | Command | Description |
@@ -68,4 +78,5 @@ Stops and removes all containers, volumes, and images. ⚠️ **Warning: This wi
 | `./scripts/logs.sh <service>` | View logs |
 | `./scripts/build.sh` | Rebuild services |
 | `./scripts/shell.sh <service>` | Open shell in service |
+| `./scripts/backup-db.sh [db_name]` | Backup MongoDB database |
 | `./scripts/clean.sh` | Clean up everything |
