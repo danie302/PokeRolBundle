@@ -9,9 +9,7 @@ import cors from 'cors';
 import { verifyEmailConfig } from './services/emailService';
 
 // Load environment variables
-dotenv.config({
-  path: '.env'
-});
+dotenv.config();
 
 // Create express app
 const app = express();
@@ -40,13 +38,18 @@ app.get('/', (req, res) => {
   res.json({ message: 'Welcome to PokeRol API! new version 1.0' });
 });
 
-// Use routes 
+// Use routes
 app.use('/users', userRoutes);
 app.use('/pokemon', pokemonRoutes);
 app.use('/team', teamRoutes);
 app.use('/auth', authRoutes);
 
-// Start server
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-}); 
+// Start server (only if not in Vercel environment)
+if (process.env.NODE_ENV !== 'production' || !process.env.VERCEL) {
+    app.listen(port, () => {
+        console.log(`Server is running on port ${port}`);
+    });
+}
+
+// Export app for Vercel serverless functions
+export default app; 
