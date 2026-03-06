@@ -171,6 +171,8 @@
     "deleteConfirmText": "¿Estás seguro de que quieres eliminar a {{pokemonName}} permanentemente del juego? Se eliminará de todos los equipos.",
     "deleteConfirmWarning": "Esta acción no se puede deshacer.",
     "cancel": "Cancelar",
-    "saveChanges": "Guardar Cambios"
+    "saveChanges": "Guardar Cambios",
+    "notes": "Notas",
+    "description": "Descripción"
   }
 }
